@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://vjsqhoeakup3"]
+
+[ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_4jv7b"]
+[ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="1_mhtsl"]
+[ext_resource type="PackedScene" uid="uid://b63ubmnfn2dry" path="res://Scene/obstacle.tscn" id="2_w51g1"]
+[ext_resource type="Texture2D" uid="uid://bka2mqvudt2tw" path="res://assets/school-background.jpg" id="4_03iqk"]
+[ext_resource type="Script" uid="uid://8ha7sywpvkty" path="res://Scene/obstacle.gd" id="4_ihreq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mhtsl"]
+size = Vector2(3200, 32)
+
+[node name="Game" type="Node2D" unique_id=1280767070]
+position = Vector2(-8, 0)
+script = ExtResource("1_4jv7b")
+
+[node name="Player" parent="." unique_id=416136360 instance=ExtResource("1_mhtsl")]
+position = Vector2(-165, -628)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1474973438]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=138756658]
+position = Vector2(62, 51)
+shape = SubResource("RectangleShape2D_mhtsl")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=132653480]
+custom_minimum_size = Vector2(3200, 32)
+offset_left = -1548.0
+offset_top = 32.0
+offset_right = 1652.0
+offset_bottom = 72.0
+color = Color(0.31764707, 0.22745098, 0, 1)
+
+[node name="obstacle" parent="." unique_id=923424583 instance=ExtResource("2_w51g1")]
+position = Vector2(-747.9999, -206)
+rotation = 0.050614547
+scale = Vector2(0.1, 0.1)
+skew = -0.06283186
+script = ExtResource("4_ihreq")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1322637000]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1761932555]
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1232245752]
+position = Vector2(-332, -573)
+scale = Vector2(9.3924055, 6.0761905)
+texture = ExtResource("4_03iqk")

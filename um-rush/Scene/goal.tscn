@@ -9,6 +9,8 @@ height = 154.0
 
 [node name="Goal" type="Area2D" unique_id=398019207]
 scale = Vector2(4, 4)
+collision_layer = 8
+collision_mask = 2
 script = ExtResource("1_lj743")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=964380793]

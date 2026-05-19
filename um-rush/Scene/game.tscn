@@ -2,15 +2,19 @@
 
 [ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_4jv7b"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="1_mhtsl"]
-[ext_resource type="PackedScene" uid="uid://b63ubmnfn2dry" path="res://Scene/obstacle.tscn" id="2_w51g1"]
-[ext_resource type="Texture2D" uid="uid://bka2mqvudt2tw" path="res://assets/school-background.jpg" id="4_03iqk"]
-[ext_resource type="Script" uid="uid://8ha7sywpvkty" path="res://Scene/obstacle.gd" id="4_ihreq"]
+[ext_resource type="Texture2D" uid="uid://hkfmq5dqrf02" path="res://assets/1.png" id="5_twwsd"]
+[ext_resource type="Texture2D" uid="uid://ile3tt0pb6a6" path="res://assets/2.png" id="6_c6b8m"]
+[ext_resource type="Texture2D" uid="uid://0bpjpinx4mi5" path="res://assets/3.png" id="7_0ka5k"]
+[ext_resource type="Texture2D" uid="uid://drd78voywjhl0" path="res://assets/4.png" id="8_ha7wd"]
+[ext_resource type="Texture2D" uid="uid://cdu44ure8iohx" path="res://assets/5.png" id="9_yjs1f"]
+[ext_resource type="Texture2D" uid="uid://cubcxi2xww1v4" path="res://assets/6.png" id="10_vyw1f"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mhtsl"]
-size = Vector2(3200, 32)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
+normal = Vector2(0.0026525108, -0.99999654)
+distance = 479.0
 
 [node name="Game" type="Node2D" unique_id=1280767070]
-position = Vector2(-8, 0)
+position = Vector2(228.2, 742)
 script = ExtResource("1_4jv7b")
 
 [node name="Player" parent="." unique_id=416136360 instance=ExtResource("1_mhtsl")]
@@ -19,8 +23,8 @@ position = Vector2(-165, -628)
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1474973438]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=138756658]
-position = Vector2(62, 51)
-shape = SubResource("RectangleShape2D_mhtsl")
+position = Vector2(62, 526)
+shape = SubResource("WorldBoundaryShape2D_twwsd")
 
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=132653480]
 custom_minimum_size = Vector2(3200, 32)
@@ -29,20 +33,59 @@ offset_top = 32.0
 offset_right = 1652.0
 offset_bottom = 72.0
 color = Color(0.31764707, 0.22745098, 0, 1)
-
-[node name="obstacle" parent="." unique_id=923424583 instance=ExtResource("2_w51g1")]
-position = Vector2(-747.9999, -206)
-rotation = 0.050614547
-scale = Vector2(0.1, 0.1)
-skew = -0.06283186
-script = ExtResource("4_ihreq")
+metadata/_edit_use_anchors_ = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1322637000]
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1761932555]
-motion_mirroring = Vector2(1920, 0)
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground" unique_id=120860729]
+scroll_offset = Vector2(236.2, 742)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1232245752]
-position = Vector2(-332, -573)
-scale = Vector2(9.3924055, 6.0761905)
-texture = ExtResource("4_03iqk")
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D" unique_id=2119635255]
+position = Vector2(-177.50015, -633.25)
+scale = Vector2(4.432292, 4.433642)
+texture = ExtResource("5_twwsd")
+
+[node name="Parallax2D2" type="Parallax2D" parent="ParallaxBackground" unique_id=1335660166]
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.1, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D2" unique_id=38536438]
+position = Vector2(-177.50029, -622.75)
+scale = Vector2(4.435765, 4.3935184)
+texture = ExtResource("6_c6b8m")
+
+[node name="Parallax2D3" type="Parallax2D" parent="ParallaxBackground" unique_id=2019278636]
+scroll_offset = Vector2(0, 742)
+repeat_size = Vector2(0.2, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=1388718727]
+position = Vector2(47.500023, -617)
+scale = Vector2(4.421875, 4.419753)
+texture = ExtResource("7_0ka5k")
+
+[node name="Parallax2D4" type="Parallax2D" parent="ParallaxBackground" unique_id=990399225]
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.3, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D4" unique_id=124699772]
+position = Vector2(-165.50012, -623.5)
+scale = Vector2(4.4288197, 4.453704)
+texture = ExtResource("8_ha7wd")
+
+[node name="Parallax2D5" type="Parallax2D" parent="ParallaxBackground" unique_id=1498259918]
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.5, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D5" unique_id=665127858]
+position = Vector2(-163.50002, -626)
+scale = Vector2(4.4322915, 4.438272)
+texture = ExtResource("9_yjs1f")
+
+[node name="Parallax2D6" type="Parallax2D" parent="ParallaxBackground" unique_id=1987192717]
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.6, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D6" unique_id=1312734636]
+position = Vector2(-167.50009, -637.75)
+scale = Vector2(4.4253473, 4.393518)
+texture = ExtResource("10_vyw1f")

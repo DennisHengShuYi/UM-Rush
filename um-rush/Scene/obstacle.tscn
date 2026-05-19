@@ -3,18 +3,16 @@
 [ext_resource type="Texture2D" uid="uid://btwlywy1tgr13" path="res://assets/obstacle_1-removebg-preview.png" id="1_ogkn3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ogkn3"]
-radius = 907.0
-height = 1962.0
+radius = 78.0
+height = 178.0
 
 [node name="obstacle" type="StaticBody2D" unique_id=923424583]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1766595804]
-position = Vector2(8921.483, 1273.5)
-scale = Vector2(13.071277, 10.063107)
 texture = ExtResource("1_ogkn3")
 region_enabled = true
 region_rect = Rect2(42.200027, 103.6, 210.39996, 206.4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971220393]
-position = Vector2(8799, 1230)
+position = Vector2(5, 2)
 shape = SubResource("CapsuleShape2D_ogkn3")

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_4jv7b"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="1_mhtsl"]
+[ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_8f6ah"]
 [ext_resource type="Texture2D" uid="uid://hkfmq5dqrf02" path="res://assets/1.png" id="5_twwsd"]
 [ext_resource type="Texture2D" uid="uid://ile3tt0pb6a6" path="res://assets/2.png" id="6_c6b8m"]
 [ext_resource type="Texture2D" uid="uid://0bpjpinx4mi5" path="res://assets/3.png" id="7_0ka5k"]
@@ -12,6 +13,15 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
 distance = 317.91135
+
+[sub_resource type="Gradient" id="Gradient_sagxc"]
+colors = PackedColorArray(0, 0, 0, 0.16078432, 0, 0, 0, 0.14901961)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8f6ah"]
+gradient = SubResource("Gradient_sagxc")
+width = 1280
+height = 500
+fill_to = Vector2(0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sagxc"]
 bg_color = Color(0.101960786, 0.101960786, 0.18039216, 1)
@@ -58,14 +68,18 @@ collision_mask = 0
 position = Vector2(50, 580)
 shape = SubResource("WorldBoundaryShape2D_twwsd")
 
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=132653480]
-custom_minimum_size = Vector2(99999, 800)
-offset_left = -34814.2
-offset_top = 9.0
-offset_right = 65184.8
-offset_bottom = 509.0
-color = Color(0.14622876, 0.14622876, 0.14622873, 1)
-metadata/_edit_use_anchors_ = true
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1903530315]
+position = Vector2(4806, 267)
+scale = Vector2(11.168945, 0.38666666)
+texture = ExtResource("3_8f6ah")
+
+[node name="TextureRect" type="TextureRect" parent="StaticBody2D" unique_id=597426920]
+custom_minimum_size = Vector2(1280, 500)
+offset_left = -6591.0
+offset_top = 21.0
+offset_right = 93408.0
+offset_bottom = 521.0
+texture = SubResource("GradientTexture2D_8f6ah")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1322637000]
 
@@ -114,7 +128,7 @@ scale = Vector2(4.4322915, 4.438272)
 texture = ExtResource("9_yjs1f")
 
 [node name="Parallax2D6" type="Parallax2D" parent="ParallaxBackground" unique_id=1987192717]
-scroll_offset = Vector2(236.2, 742)
+scroll_offset = Vector2(362, 807)
 autoscroll = Vector2(0.6, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D6" unique_id=1312734636]

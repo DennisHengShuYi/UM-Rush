@@ -69,8 +69,8 @@ position = Vector2(50, 580)
 shape = SubResource("WorldBoundaryShape2D_twwsd")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1903530315]
-position = Vector2(4806, 267)
-scale = Vector2(11.168945, 0.38666666)
+position = Vector2(43682.004, 257.00003)
+scale = Vector2(49.133793, 0.37333336)
 texture = ExtResource("3_8f6ah")
 
 [node name="TextureRect" type="TextureRect" parent="StaticBody2D" unique_id=597426920]

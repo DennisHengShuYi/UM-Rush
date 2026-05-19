@@ -15,6 +15,7 @@ enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
 
 var desk_scene = preload("res://Scene/obstacle.tscn")
+var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")  # ← added
 var goal_scene = preload("res://Scene/goal.tscn")
 
 var last_spawn_x = 0.0
@@ -27,7 +28,7 @@ var time_left = 60.0
 var game_running = true
 
 var start_x = 0.0
-var goal_distance = 10000.0
+var goal_distance = 15000.0
 var goal_spawned = false
 
 func _ready():
@@ -78,14 +79,28 @@ func _process(delta: float) -> void:
 
 	# Distance-based obstacle spawning
 	if Input.is_action_pressed("ui_right") and not goal_spawned:
-		if player.position.x - last_spawn_x >= spawn_distance:
-			last_spawn_x = player.position.x
-			spawn_desk()
+		var distance_to_goal = goal_distance - (player.position.x - start_x)
+		if distance_to_goal > 3000:   # ← stop spawning near goal
+			if player.position.x - last_spawn_x >= spawn_distance:
+				last_spawn_x = player.position.x
+				spawn_random_obstacle()   # ← changed
+
+func spawn_random_obstacle():
+	var roll = randi() % 2
+	if roll == 0:
+		spawn_desk()
+	else:
+		spawn_obstacle2()
 
 func spawn_desk():
 	var desk = desk_scene.instantiate()
 	add_child(desk)
 	desk.position = Vector2(player.position.x + 1000, -20)
+
+func spawn_obstacle2():
+	var obs = obstacle2_scene.instantiate()
+	add_child(obs)
+	obs.position = Vector2(player.position.x + 1000, 0)
 
 func spawn_goal():
 	var goal = goal_scene.instantiate()

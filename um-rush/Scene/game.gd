@@ -7,6 +7,9 @@ extends Node2D
 @onready var win_popup = $CanvasLayer/WinPopup
 @onready var message_label = $CanvasLayer/WinPopup/VBoxContainer/MessageLabel
 @onready var next_button = $CanvasLayer/WinPopup/VBoxContainer/NextLevelButton
+@onready var gameover_popup = $CanvasLayer/GameOverPopup
+@onready var gameover_message = $CanvasLayer/GameOverPopup/VBoxContainer/MessageLabel
+@onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 
 enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
@@ -15,7 +18,7 @@ var desk_scene = preload("res://Scene/obstacle.tscn")
 var goal_scene = preload("res://Scene/goal.tscn")
 
 var last_spawn_x = 0.0
-var spawn_distance = 1500.0
+var spawn_distance = 2000.0
 
 var stress = 0.0
 var max_stress = 100.0
@@ -31,7 +34,9 @@ func _ready():
 	stress_bar.max_value = max_stress
 	stress_bar.value = 0
 	win_popup.visible = false
+	gameover_popup.visible = false
 	next_button.pressed.connect(_on_next_level_pressed)
+	retry_button.pressed.connect(_on_retry_pressed)
 	start_game()
 
 func start_game():
@@ -52,7 +57,7 @@ func _process(delta: float) -> void:
 	timer_label.text = "Time: " + str(int(time_left))
 	if time_left <= 0:
 		time_left = 0
-		game_over()
+		game_over("⏰ You ran out of time!\nGet to class faster next time.")
 
 	# Stress
 	stress += 3 * delta
@@ -63,7 +68,7 @@ func _process(delta: float) -> void:
 	stress_label.text = "Stress: " + str(int(stress)) + "%"
 
 	if stress >= max_stress:
-		game_over()
+		game_over("😵 Burned out from stress!\nTake it easy next time.")
 
 	# Distance check → spawn goal
 	var distance_travelled = player.position.x - start_x
@@ -101,16 +106,25 @@ func win():
 	else:
 		message_label.text = "😵 Barely survived!\nScore: C"
 
-func game_over():
+func game_over(reason: String = ""):
+	if state == GameState.GAME_OVER:
+		return
 	state = GameState.GAME_OVER
 	game_running = false
-	timer_label.text = "Burned Out! 😵 Press Space to retry"
 	player.set_physics_process(false)
+	gameover_popup.visible = true
+	if stress >= max_stress:
+		gameover_message.text = "😵 Burned out from stress!\nTake it easy next time."
+	elif time_left <= 0:
+		gameover_message.text = "⏰ You ran out of time!\nGet to class faster next time."
+	else:
+		gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
 	get_tree().change_scene_to_file("res://Scene/level2.tscn")
 
+func _on_retry_pressed():
+	get_tree().reload_current_scene()
+
 func _input(event):
-	if state == GameState.GAME_OVER:
-		if Input.is_action_just_pressed("ui_accept"):
-			get_tree().reload_current_scene()
+	pass

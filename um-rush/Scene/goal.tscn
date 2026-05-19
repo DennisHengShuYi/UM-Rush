@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dxeh15x3pkhew"]
+
+[ext_resource type="Script" uid="uid://ddacq56o48evs" path="res://goal.gd" id="1_lj743"]
+[ext_resource type="Texture2D" uid="uid://ccqo2yws56vgr" path="res://assets/orange hq04.png" id="2_d0u4l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_plxj0"]
+radius = 37.0
+height = 154.0
+
+[node name="Goal" type="Area2D" unique_id=398019207]
+scale = Vector2(4, 4)
+script = ExtResource("1_lj743")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=964380793]
+texture = ExtResource("2_d0u4l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=892921534]
+position = Vector2(-20, -57)
+shape = SubResource("CapsuleShape2D_plxj0")

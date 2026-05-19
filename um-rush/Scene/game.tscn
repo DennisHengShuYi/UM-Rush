@@ -11,28 +11,45 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
-distance = 479.0
+distance = 317.91135
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sagxc"]
+bg_color = Color(0.101960786, 0.101960786, 0.18039216, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9137255, 0.27058825, 0.3764706, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8f6ah"]
+bg_color = Color(0.6, 0.6, 0.6, 0.98039216)
 
 [node name="Game" type="Node2D" unique_id=1280767070]
 position = Vector2(228.2, 742)
 script = ExtResource("1_4jv7b")
 
 [node name="Player" parent="." unique_id=416136360 instance=ExtResource("1_mhtsl")]
+z_index = 2
 position = Vector2(-165, -628)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1474973438]
+position = Vector2(7.800003, -186)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=138756658]
-position = Vector2(62, 526)
+position = Vector2(50, 580)
 shape = SubResource("WorldBoundaryShape2D_twwsd")
 
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=132653480]
-custom_minimum_size = Vector2(3200, 32)
-offset_left = -1548.0
-offset_top = 32.0
-offset_right = 1652.0
-offset_bottom = 72.0
-color = Color(0.31764707, 0.22745098, 0, 1)
+custom_minimum_size = Vector2(99999, 800)
+offset_left = -34814.2
+offset_top = 9.0
+offset_right = 65184.8
+offset_bottom = 509.0
+color = Color(0.14622876, 0.14622876, 0.14622873, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1322637000]
@@ -89,3 +106,70 @@ autoscroll = Vector2(0.6, 0)
 position = Vector2(-167.50009, -637.75)
 scale = Vector2(4.4253473, 4.393518)
 texture = ExtResource("10_vyw1f")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=66158136]
+offset = Vector2(20, 0)
+transform = Transform2D(1, 0, 0, 1, 20, 0)
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=334303917]
+offset_left = 170.0
+offset_right = 174.0
+offset_bottom = 27.0
+accessibility_name = "Stress Level"
+theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
+theme_override_font_sizes/font_size = 25
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=141402623]
+offset_left = 300.0
+offset_top = 2.0
+offset_right = 365.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
+theme_override_font_sizes/font_size = 25
+text = "Time: 60"
+
+[node name="StressLabel" type="Label" parent="CanvasLayer" unique_id=1291566635]
+offset_left = 50.0
+offset_top = 2.0
+offset_right = 146.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
+theme_override_font_sizes/font_size = 25
+text = "Stress Level:"
+
+[node name="WinPopup" type="Panel" parent="CanvasLayer" unique_id=1996287091]
+visible = false
+custom_minimum_size = Vector2(400, 250)
+offset_left = 390.0
+offset_top = 210.0
+offset_right = 890.0
+offset_bottom = 510.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sagxc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/WinPopup" unique_id=2023612716]
+custom_minimum_size = Vector2(400, 250)
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 300.0
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/WinPopup/VBoxContainer" unique_id=1516127223]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Level Complete! 🎉"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer/WinPopup/VBoxContainer" unique_id=495785396]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NextLevelButton" type="Button" parent="CanvasLayer/WinPopup/VBoxContainer" unique_id=538037530]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.96249706, 0.37212738, 0.3666521, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_8f6ah")
+text = "Next Level →"

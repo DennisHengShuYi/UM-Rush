@@ -3,12 +3,10 @@
 [ext_resource type="Script" uid="uid://ddacq56o48evs" path="res://goal.gd" id="1_lj743"]
 [ext_resource type="Texture2D" uid="uid://dj5i1lfbh3tef" path="res://assets/level1_checkpoint.png" id="2_d0u4l"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_plxj0"]
-radius = 37.0
-height = 154.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lj743"]
+size = Vector2(862, 315)
 
 [node name="Goal" type="Area2D" unique_id=398019207]
-scale = Vector2(1, 1)
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_lj743")
@@ -17,5 +15,5 @@ script = ExtResource("1_lj743")
 texture = ExtResource("2_d0u4l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=892921534]
-position = Vector2(-20, -57)
-shape = SubResource("CapsuleShape2D_plxj0")
+position = Vector2(12, 118.5)
+shape = SubResource("RectangleShape2D_lj743")

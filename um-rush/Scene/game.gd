@@ -174,7 +174,7 @@ func game_over(reason: String = ""):
 		gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
-	get_tree().change_scene_to_file("res://Scene/level2.tscn")
+	get_tree().change_scene_to_file("res://Scene/canteen.tscn")
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()

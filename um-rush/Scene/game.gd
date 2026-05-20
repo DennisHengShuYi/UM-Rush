@@ -105,7 +105,7 @@ func spawn_obstacle2():
 func spawn_goal():
 	var goal = goal_scene.instantiate()
 	add_child(goal)
-	goal.position = Vector2(player.position.x + 2000, 50)
+	goal.position = Vector2(player.position.x + 2000, -150)
 
 func win():
 	state = GameState.WIN

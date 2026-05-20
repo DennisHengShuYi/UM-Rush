@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccqo2yws56vgr"
-path="res://.godot/imported/orange hq04.png-7704519b3c348972663274a7825f24cc.ctex"
+uid="uid://cklio465bc0pw"
+path="res://.godot/imported/Untitled design (9).png-84680acf3d199ec2666efb1825dcaf76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/orange hq04.png"
-dest_files=["res://.godot/imported/orange hq04.png-7704519b3c348972663274a7825f24cc.ctex"]
+source_file="res://assets/Level1/Untitled design (9).png"
+dest_files=["res://.godot/imported/Untitled design (9).png-84680acf3d199ec2666efb1825dcaf76.ctex"]
 
 [params]
 

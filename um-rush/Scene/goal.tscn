@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://dxeh15x3pkhew"]
 
 [ext_resource type="Script" uid="uid://ddacq56o48evs" path="res://goal.gd" id="1_lj743"]
-[ext_resource type="Texture2D" uid="uid://ccqo2yws56vgr" path="res://assets/orange hq04.png" id="2_d0u4l"]
+[ext_resource type="Texture2D" uid="uid://dj5i1lfbh3tef" path="res://assets/level1_checkpoint.png" id="2_d0u4l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_plxj0"]
 radius = 37.0
 height = 154.0
 
 [node name="Goal" type="Area2D" unique_id=398019207]
-scale = Vector2(4, 4)
+scale = Vector2(1, 1)
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_lj743")

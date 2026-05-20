@@ -10,6 +10,7 @@ const DASH_COOLDOWN = 1.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var col = $CollisionShape2D
 
+var speed_mult := 1.0
 var is_dashing = false
 var dash_timer = 0.0
 var dash_cooldown_timer = 0.0
@@ -55,7 +56,7 @@ func _physics_process(delta: float) -> void:
 
 		var direction := Input.get_axis("ui_left", "ui_right")
 		if direction != 0:
-			velocity.x = direction * SPEED
+			velocity.x = direction * SPEED * speed_mult
 			anim.flip_h = direction < 0
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)

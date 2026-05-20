@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_4jv7b"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="1_mhtsl"]
+[ext_resource type="Script" uid="uid://i8fqmj1erlnk" path="res://Scene/alarm_snooze.gd" id="2_snooze"]
 [ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_8f6ah"]
 [ext_resource type="Texture2D" uid="uid://hkfmq5dqrf02" path="res://assets/1.png" id="5_twwsd"]
 [ext_resource type="Texture2D" uid="uid://ile3tt0pb6a6" path="res://assets/2.png" id="6_c6b8m"]
@@ -128,13 +129,16 @@ scale = Vector2(4.4322915, 4.438272)
 texture = ExtResource("9_yjs1f")
 
 [node name="Parallax2D6" type="Parallax2D" parent="ParallaxBackground" unique_id=1987192717]
-scroll_offset = Vector2(362, 807)
-autoscroll = Vector2(0.6, 0)
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.4, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D6" unique_id=1312734636]
-position = Vector2(-167.50009, -637.75)
-scale = Vector2(4.4253473, 4.393518)
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D6" unique_id=1553403164]
+position = Vector2(-179.19992, -618)
+scale = Vector2(4.409722, 4.314814)
 texture = ExtResource("10_vyw1f")
+
+[node name="AlarmSnooze" type="Node" parent="." unique_id=1111111111]
+script = ExtResource("2_snooze")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=66158136]
 offset = Vector2(20, 0)
@@ -244,5 +248,5 @@ offset_right = 742.0
 offset_bottom = 38.0
 theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
 theme_override_font_sizes/font_size = 24
-text = "Level 1 - Mahallah"
+text = "Level 1 - Residential College"
 horizontal_alignment = 1

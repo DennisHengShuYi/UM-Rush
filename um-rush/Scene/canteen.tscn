@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cvg6ylgw4yfii"]
+[gd_scene format=3 uid="uid://dec11alri3ae1"]
 
 [ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_0v1td"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="2_84swh"]
@@ -246,3 +246,8 @@ theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
 theme_override_font_sizes/font_size = 24
 text = "Level 2 - Canteen"
 horizontal_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=50697388]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true

@@ -10,16 +10,17 @@ extends Node2D
 @onready var gameover_popup = $CanvasLayer/GameOverPopup
 @onready var gameover_message = $CanvasLayer/GameOverPopup/VBoxContainer/MessageLabel
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
+@onready var camera = $Camera2D
 
 enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
 
 var desk_scene = preload("res://Scene/obstacle.tscn")
-var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")  # ← added
+var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")
 var goal_scene = preload("res://Scene/goal.tscn")
 
 var last_spawn_x = 0.0
-var spawn_distance = 2000.0
+var spawn_distance = 800.0
 
 var stress = 0.0
 var max_stress = 100.0
@@ -28,8 +29,11 @@ var time_left = 60.0
 var game_running = true
 
 var start_x = 0.0
-var goal_distance = 15000.0
+var goal_distance = 40000.0
 var goal_spawned = false
+
+# Lane Y positions — must match player.gd lanes array
+var lanes = [-200.0, 0.0, 200.0]
 
 func _ready():
 	stress_bar.max_value = max_stress
@@ -38,6 +42,9 @@ func _ready():
 	gameover_popup.visible = false
 	next_button.pressed.connect(_on_next_level_pressed)
 	retry_button.pressed.connect(_on_retry_pressed)
+	camera.drag_vertical_enabled = false
+	camera.position_smoothing_enabled = false
+	player.hit_obstacle.connect(_on_player_hit_obstacle)
 	start_game()
 
 func start_game():
@@ -54,6 +61,8 @@ func _process(delta: float) -> void:
 		return
 
 	# Countdown timer
+	camera.global_position.x = player.global_position.x
+	camera.global_position.y = 400.0
 	time_left -= delta
 	timer_label.text = "Time: " + str(int(time_left))
 	if time_left <= 0:
@@ -80,32 +89,56 @@ func _process(delta: float) -> void:
 	# Distance-based obstacle spawning
 	if Input.is_action_pressed("ui_right") and not goal_spawned:
 		var distance_to_goal = goal_distance - (player.position.x - start_x)
-		if distance_to_goal > 3000:   # ← stop spawning near goal
+		if distance_to_goal > 800:
 			if player.position.x - last_spawn_x >= spawn_distance:
 				last_spawn_x = player.position.x
-				spawn_random_obstacle()   # ← changed
+				spawn_obstacles()
 
-func spawn_random_obstacle():
-	var roll = randi() % 2
-	if roll == 0:
-		spawn_desk()
+# Picks how many lanes to fill, then spawns at the same X
+var last_was_double = false
+
+func spawn_obstacles():
+	var spawn_x = player.position.x + 1000.0
+	var roll = randf()
+
+	# If last spawn was double (top+bottom+center), force single this time
+	# and never pick center — prevents 3-lane cluster
+	if last_was_double:
+		last_was_double = false
+		var lane_index = [0, 2].pick_random()  # only top or bottom
+		spawn_obstacle_at(spawn_x, lanes[lane_index])
+		return
+
+	if roll < 0.60:
+		# Weighted single lane — center 50%, top/bottom 25% each
+		var lane_roll = randf()
+		if lane_roll < 0.25:
+			spawn_obstacle_at(spawn_x, lanes[0])
+		elif lane_roll < 0.75:
+			spawn_obstacle_at(spawn_x, lanes[1])
+		else:
+			spawn_obstacle_at(spawn_x, lanes[2])
 	else:
-		spawn_obstacle2()
+		# Top + bottom, well separated so they don't visually stack
+		spawn_obstacle_at(spawn_x,          lanes[0])
+		spawn_obstacle_at(spawn_x + 400.0,  lanes[2])  # ← 400 so they don't look merged
+		# Center follows after both are clearly past
+		spawn_obstacle_at(spawn_x + 1100.0, lanes[1])
+		last_was_double = true  # ← next spawn will be forced single on top or bottom only
 
-func spawn_desk():
-	var desk = desk_scene.instantiate()
-	add_child(desk)
-	desk.position = Vector2(player.position.x + 1000, -20)
-
-func spawn_obstacle2():
-	var obs = obstacle2_scene.instantiate()
+func spawn_obstacle_at(spawn_x: float, spawn_y: float):
+	var obs
+	if randi() % 2 == 0:
+		obs = desk_scene.instantiate()
+	else:
+		obs = obstacle2_scene.instantiate()
 	add_child(obs)
-	obs.position = Vector2(player.position.x + 1000, 0)
+	obs.position = Vector2(spawn_x, spawn_y)
 
 func spawn_goal():
 	var goal = goal_scene.instantiate()
 	add_child(goal)
-	goal.position = Vector2(player.position.x + 2000, -150)
+	goal.position = Vector2(player.position.x + 2000, lanes[1])  # bottom lane
 
 func win():
 	state = GameState.WIN
@@ -143,3 +176,10 @@ func _on_retry_pressed():
 
 func _input(event):
 	pass
+
+func _on_player_hit_obstacle():
+	stress = clamp(stress + 40.0, 0, max_stress)
+	stress_bar.value = stress
+	stress_label.text = "Stress: " + str(int(stress)) + "%"
+	if stress >= max_stress:
+		game_over("😵 Burned out from stress!\nTake it easy next time.")

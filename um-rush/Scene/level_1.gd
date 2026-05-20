@@ -11,11 +11,11 @@ extends Node2D
 @onready var gameover_message = $CanvasLayer/GameOverPopup/VBoxContainer/MessageLabel
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 
-enum GameState { MENU, PLAYING, GAME_OVER, WIN }
-var state = GameState.MENU
+enum GameState { PLAYING, GAME_OVER, WIN }
+var state = GameState.PLAYING
 
 var desk_scene = preload("res://Scene/obstacle.tscn")
-var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")  # ← added
+var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")
 var goal_scene = preload("res://Scene/goal.tscn")
 
 var last_spawn_x = 0.0
@@ -38,14 +38,6 @@ func _ready():
 	gameover_popup.visible = false
 	next_button.pressed.connect(_on_next_level_pressed)
 	retry_button.pressed.connect(_on_retry_pressed)
-	start_game()
-
-func start_game():
-	state = GameState.PLAYING
-	game_running = true
-	time_left = 60.0
-	stress = 0.0
-	goal_spawned = false
 	start_x = player.position.x
 	last_spawn_x = player.position.x
 
@@ -60,7 +52,7 @@ func _process(delta: float) -> void:
 		time_left = 0
 		game_over("⏰ You ran out of time!\nGet to class faster next time.")
 
-	# Stress
+	# Stress rises passively, drops while moving
 	stress += 3 * delta
 	if Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left"):
 		stress -= 8 * delta
@@ -71,23 +63,22 @@ func _process(delta: float) -> void:
 	if stress >= max_stress:
 		game_over("😵 Burned out from stress!\nTake it easy next time.")
 
-	# Distance check → spawn goal
+	# Spawn goal once far enough
 	var distance_travelled = player.position.x - start_x
 	if distance_travelled >= goal_distance and not goal_spawned:
 		goal_spawned = true
 		spawn_goal()
 
-	# Distance-based obstacle spawning
+	# Spawn obstacles while running, stop near goal
 	if Input.is_action_pressed("ui_right") and not goal_spawned:
 		var distance_to_goal = goal_distance - (player.position.x - start_x)
-		if distance_to_goal > 3000:   # ← stop spawning near goal
+		if distance_to_goal > 3000:
 			if player.position.x - last_spawn_x >= spawn_distance:
 				last_spawn_x = player.position.x
-				spawn_random_obstacle()   # ← changed
+				spawn_random_obstacle()
 
 func spawn_random_obstacle():
-	var roll = randi() % 2
-	if roll == 0:
+	if randi() % 2 == 0:
 		spawn_desk()
 	else:
 		spawn_obstacle2()
@@ -108,6 +99,8 @@ func spawn_goal():
 	goal.position = Vector2(player.position.x + 2000, 50)
 
 func win():
+	if state == GameState.WIN:
+		return
 	state = GameState.WIN
 	game_running = false
 	player.set_physics_process(false)
@@ -136,10 +129,7 @@ func game_over(reason: String = ""):
 		gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
-	get_tree().change_scene_to_file("res://Scene/level1.tscn")
+	get_tree().change_scene_to_file("res://Scene/level2.tscn")
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()
-
-func _input(event):
-	pass

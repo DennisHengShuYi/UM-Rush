@@ -1,0 +1,232 @@
+[gd_scene format=3 uid="uid://dt24cjnininw8"]
+
+[ext_resource type="Script" uid="uid://dk6w7yfaiysra" path="res://Scene/level_1.gd" id="1_fpa3h"]
+[ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="1_mhtsl"]
+[ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_8f6ah"]
+[ext_resource type="Texture2D" uid="uid://dhlftynt3d742" path="res://assets/Level1/1.png" id="4_ofx4i"]
+[ext_resource type="Texture2D" uid="uid://bxor1i4r14hsy" path="res://assets/Level1/2.png" id="5_lfbnc"]
+[ext_resource type="Texture2D" uid="uid://cmtxk10b1m0m7" path="res://assets/Level1/3.png" id="6_fpa3h"]
+[ext_resource type="Texture2D" uid="uid://c5k3v7rcj8tsp" path="res://assets/Level1/5.png" id="8_lfbnc"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
+normal = Vector2(0.0026525108, -0.99999654)
+distance = 317.91135
+
+[sub_resource type="Gradient" id="Gradient_sagxc"]
+colors = PackedColorArray(0, 0, 0, 0.16078432, 0, 0, 0, 0.14901961)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8f6ah"]
+gradient = SubResource("Gradient_sagxc")
+width = 1280
+height = 500
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sagxc"]
+bg_color = Color(0.101960786, 0.101960786, 0.18039216, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9137255, 0.27058825, 0.3764706, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8f6ah"]
+bg_color = Color(0.6, 0.6, 0.6, 0.98039216)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twwsd"]
+bg_color = Color(0.101960786, 0.101960786, 0.18039216, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9137255, 0.27058825, 0.3764706, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6b8m"]
+
+[node name="Level1" type="Node2D" unique_id=1280767070]
+position = Vector2(228.2, 742)
+script = ExtResource("1_fpa3h")
+
+[node name="Player" parent="." unique_id=416136360 instance=ExtResource("1_mhtsl")]
+z_index = 2
+position = Vector2(-165, -628)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1474973438]
+position = Vector2(7.800003, -186)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=138756658]
+position = Vector2(50, 580)
+shape = SubResource("WorldBoundaryShape2D_twwsd")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1903530315]
+position = Vector2(43682.004, 257.00003)
+scale = Vector2(49.133793, 0.37333336)
+texture = ExtResource("3_8f6ah")
+
+[node name="TextureRect" type="TextureRect" parent="StaticBody2D" unique_id=597426920]
+custom_minimum_size = Vector2(1280, 500)
+offset_left = -6591.0
+offset_top = 21.0
+offset_right = 93408.0
+offset_bottom = 521.0
+texture = SubResource("GradientTexture2D_8f6ah")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1322637000]
+
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground" unique_id=120860729]
+scroll_offset = Vector2(236.2, 742)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D" unique_id=260705575]
+show_behind_parent = true
+position = Vector2(-177.20001, -615.50006)
+scale = Vector2(10.063492, 13.805554)
+texture = ExtResource("4_ofx4i")
+
+[node name="Parallax2D2" type="Parallax2D" parent="ParallaxBackground" unique_id=1335660166]
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.1, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D2" unique_id=953129044]
+position = Vector2(-616.2, -984.00006)
+scale = Vector2(6.617063, 7.8924737)
+texture = ExtResource("5_lfbnc")
+region_enabled = true
+region_rect = Rect2(-0.25634766, 14.253174, 252.25635, 93.746826)
+
+[node name="Parallax2D3" type="Parallax2D" parent="ParallaxBackground" unique_id=2019278636]
+scroll_offset = Vector2(0, 742)
+repeat_size = Vector2(1280, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=1839553529]
+position = Vector2(80, -615)
+scale = Vector2(4.0343747, 4.170588)
+texture = ExtResource("6_fpa3h")
+
+[node name="Parallax2D4" type="Parallax2D" parent="ParallaxBackground" unique_id=990399225]
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.3, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D4" unique_id=1114890863]
+position = Vector2(112.80008, -1316.9998)
+scale = Vector2(4.3722224, 4.0462966)
+texture = ExtResource("5_lfbnc")
+
+[node name="Parallax2D5" type="Parallax2D" parent="ParallaxBackground" unique_id=1498259918]
+scroll_offset = Vector2(236.2, 742)
+autoscroll = Vector2(0.5, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D5" unique_id=951276414]
+position = Vector2(374.33966, -584.03613)
+scale = Vector2(0.9454056, 1.1226338)
+texture = ExtResource("8_lfbnc")
+region_enabled = true
+region_rect = Rect2(672.8496, 217.75421, 1247.1504, 823.00336)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=66158136]
+offset = Vector2(20, 0)
+transform = Transform2D(1, 0, 0, 1, 20, 0)
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=334303917]
+offset_left = 170.0
+offset_right = 174.0
+offset_bottom = 27.0
+accessibility_name = "Stress Level"
+theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
+theme_override_font_sizes/font_size = 25
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=141402623]
+offset_left = 300.0
+offset_top = 2.0
+offset_right = 365.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
+theme_override_font_sizes/font_size = 25
+text = "Time: 60"
+
+[node name="StressLabel" type="Label" parent="CanvasLayer" unique_id=1291566635]
+offset_left = 50.0
+offset_top = 2.0
+offset_right = 146.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
+theme_override_font_sizes/font_size = 25
+text = "Stress Level:"
+
+[node name="WinPopup" type="Panel" parent="CanvasLayer" unique_id=1996287091]
+visible = false
+custom_minimum_size = Vector2(400, 250)
+offset_left = 390.0
+offset_top = 210.0
+offset_right = 890.0
+offset_bottom = 510.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sagxc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/WinPopup" unique_id=2023612716]
+custom_minimum_size = Vector2(400, 250)
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 300.0
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/WinPopup/VBoxContainer" unique_id=1516127223]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Level Complete! 🎉"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer/WinPopup/VBoxContainer" unique_id=495785396]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NextLevelButton" type="Button" parent="CanvasLayer/WinPopup/VBoxContainer" unique_id=538037530]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.96249706, 0.37212738, 0.3666521, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_8f6ah")
+text = "Next Level →"
+
+[node name="GameOverPopup" type="Panel" parent="CanvasLayer" unique_id=1142406699]
+visible = false
+custom_minimum_size = Vector2(500, 300)
+offset_left = 390.0
+offset_top = 210.0
+offset_right = 890.0
+offset_bottom = 510.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_twwsd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameOverPopup" unique_id=1999492493]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 300.0
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/GameOverPopup/VBoxContainer" unique_id=1289698888]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Game Over! 😵"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer/GameOverPopup/VBoxContainer" unique_id=1751121429]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RetryButton" type="Button" parent="CanvasLayer/GameOverPopup/VBoxContainer" unique_id=1579692121]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_c6b8m")
+text = "Retry →"

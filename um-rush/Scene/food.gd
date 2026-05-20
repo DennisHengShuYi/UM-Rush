@@ -5,4 +5,5 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.name == "Player":
-		get_parent().win()
+		get_parent().collect_food()
+		queue_free()

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c06vlqgkhivnd"]
+
+[ext_resource type="Script" uid="uid://foodgd001abcde" path="res://Scene/food.gd" id="1_food"]
+[ext_resource type="Texture2D" uid="uid://foodpng001abcd" path="res://assets/Background Canteen/food.png" id="2_food"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_food"]
+radius = 55.0
+
+[node name="Food" type="Area2D" unique_id=333111001]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_food")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=333111002]
+shape = SubResource("CircleShape2D_food")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=333111003]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_food")

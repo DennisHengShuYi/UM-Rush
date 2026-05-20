@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmtxk10b1m0m7"
-path="res://.godot/imported/3.png-13cd2f4ba83cdc77a44e6bcca0a356e3.ctex"
+uid="uid://dhlftynt3d742"
+path="res://.godot/imported/1.png-a077c5d10452dd01f041aa68e8928cab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Level1/3.png"
-dest_files=["res://.godot/imported/3.png-13cd2f4ba83cdc77a44e6bcca0a356e3.ctex"]
+source_file="res://assets/Background Canteen/1.png"
+dest_files=["res://.godot/imported/1.png-a077c5d10452dd01f041aa68e8928cab.ctex"]
 
 [params]
 

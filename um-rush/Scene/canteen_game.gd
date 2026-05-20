@@ -11,17 +11,20 @@ extends Node2D
 @onready var gameover_message = $CanvasLayer/GameOverPopup/VBoxContainer/MessageLabel
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 @onready var camera = $Camera2D
-@onready var alarm_snooze = $AlarmSnooze
+@onready var hunger_meter = $HungerMeter
 
 enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
 
 var desk_scene = preload("res://Scene/obstacle.tscn")
 var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")
-var goal_scene = preload("res://Scene/goal.tscn")
+var goal_scene = preload("res://Scene/goal2.tscn")
+var food_scene = preload("res://Scene/food.tscn")
 
 var last_spawn_x = 0.0
 var spawn_distance = 800.0
+var last_food_x = 0.0
+var food_spawn_distance = 1200.0
 
 var stress = 0.0
 var max_stress = 100.0
@@ -33,7 +36,6 @@ var start_x = 0.0
 var goal_distance = 40000.0
 var goal_spawned = false
 
-# Lane Y positions — must match player.gd lanes array
 var lanes = [-200.0, 0.0, 200.0]
 
 func _ready():
@@ -46,7 +48,36 @@ func _ready():
 	camera.drag_vertical_enabled = false
 	camera.position_smoothing_enabled = false
 	player.hit_obstacle.connect(_on_player_hit_obstacle)
+	_show_start_notice()
 	start_game()
+
+var notice_label: Label
+var notice_active = false
+
+func _show_start_notice():
+	var canvas = $CanvasLayer
+
+	notice_label = Label.new()
+	notice_label.text = "🍔 COLLECT FOOD OR YOUR SPEED DROPS! 🍔"
+	notice_label.add_theme_font_size_override("font_size", 42)
+	notice_label.add_theme_color_override("font_color", Color(1, 0.7, 0.0))
+	notice_label.add_theme_color_override("font_outline_color", Color(0.2, 0.08, 0.0, 1))
+	notice_label.add_theme_constant_override("outline_size", 6)
+	notice_label.add_theme_constant_override("shadow_offset_x", 3)
+	notice_label.add_theme_constant_override("shadow_offset_y", 3)
+	notice_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 1))
+	notice_label.position = Vector2(100, 280)
+	notice_label.size = Vector2(1080, 60)
+	notice_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	canvas.add_child(notice_label)
+
+	notice_active = true
+	var timer = get_tree().create_timer(4.0)
+	timer.timeout.connect(func():
+		if is_instance_valid(notice_label):
+			notice_label.queue_free()
+		notice_active = false
+	)
 
 func start_game():
 	state = GameState.PLAYING
@@ -56,6 +87,7 @@ func start_game():
 	goal_spawned = false
 	start_x = player.position.x
 	last_spawn_x = player.position.x
+	last_food_x = player.position.x
 
 func _process(delta: float) -> void:
 	if not game_running:
@@ -90,24 +122,20 @@ func _process(delta: float) -> void:
 			if player.position.x - last_spawn_x >= spawn_distance:
 				last_spawn_x = player.position.x
 				spawn_obstacles()
+		if player.position.x - last_food_x >= food_spawn_distance:
+			last_food_x = player.position.x
+			spawn_food()
 
-# Picks how many lanes to fill, then spawns at the same X
 var last_was_double = false
 
 func spawn_obstacles():
 	var spawn_x = player.position.x + 1000.0
 	var roll = randf()
-
-	# If last spawn was double (top+bottom+center), force single this time
-	# and never pick center — prevents 3-lane cluster
 	if last_was_double:
 		last_was_double = false
-		var lane_index = [0, 2].pick_random()  # only top or bottom
-		spawn_obstacle_at(spawn_x, lanes[lane_index])
+		spawn_obstacle_at(spawn_x, lanes[[0, 2].pick_random()])
 		return
-
 	if roll < 0.60:
-		# Weighted single lane — center 50%, top/bottom 25% each
 		var lane_roll = randf()
 		if lane_roll < 0.25:
 			spawn_obstacle_at(spawn_x, lanes[0])
@@ -116,33 +144,35 @@ func spawn_obstacles():
 		else:
 			spawn_obstacle_at(spawn_x, lanes[2])
 	else:
-		# Top + bottom, well separated so they don't visually stack
-		spawn_obstacle_at(spawn_x,          lanes[0])
-		spawn_obstacle_at(spawn_x + 400.0,  lanes[2])  # ← 400 so they don't look merged
-		# Center follows after both are clearly past
+		spawn_obstacle_at(spawn_x, lanes[0])
+		spawn_obstacle_at(spawn_x + 400.0, lanes[2])
 		spawn_obstacle_at(spawn_x + 1100.0, lanes[1])
-		last_was_double = true  # ← next spawn will be forced single on top or bottom only
+		last_was_double = true
 
 func spawn_obstacle_at(spawn_x: float, spawn_y: float):
-	var obs
-	if randi() % 2 == 0:
-		obs = desk_scene.instantiate()
-	else:
-		obs = obstacle2_scene.instantiate()
+	var obs = desk_scene.instantiate() if randi() % 2 == 0 else obstacle2_scene.instantiate()
 	add_child(obs)
 	obs.position = Vector2(spawn_x, spawn_y)
+
+func spawn_food():
+	var food = food_scene.instantiate()
+	add_child(food)
+	food.position = Vector2(player.position.x + 900.0, lanes[randi() % 3])
 
 func spawn_goal():
 	var goal = goal_scene.instantiate()
 	add_child(goal)
-	goal.position = Vector2(player.position.x + 2000, lanes[0])  # bottom lane
+	goal.position = Vector2(player.position.x + 2000, lanes[1])
+
+func collect_food():
+	hunger_meter.eat_food()
 
 func win():
 	state = GameState.WIN
 	game_running = false
 	player.set_physics_process(false)
-	alarm_snooze.set_process(false)
-	alarm_snooze.zzz_label.visible = false
+	hunger_meter.set_process(false)
+	hunger_meter.hungry_label.visible = false
 	win_popup.visible = true
 	if stress < 30:
 		message_label.text = "🌟 Perfect! No stress at all!\nScore: A+"
@@ -159,8 +189,8 @@ func game_over(reason: String = ""):
 	state = GameState.GAME_OVER
 	game_running = false
 	player.set_physics_process(false)
-	alarm_snooze.set_process(false)
-	alarm_snooze.zzz_label.visible = false
+	hunger_meter.set_process(false)
+	hunger_meter.hungry_label.visible = false
 	gameover_popup.visible = true
 	if stress >= max_stress:
 		gameover_message.text = "😵 Burned out from stress!\nTake it easy next time."
@@ -170,7 +200,7 @@ func game_over(reason: String = ""):
 		gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
-	get_tree().change_scene_to_file("res://Scene/canteen.tscn")
+	get_tree().change_scene_to_file("res://Scene/level3.tscn")
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()

@@ -11,6 +11,7 @@ extends Node2D
 @onready var gameover_message = $CanvasLayer/GameOverPopup/VBoxContainer/MessageLabel
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 @onready var camera = $Camera2D
+@onready var alarm_snooze = $AlarmSnooze
 
 enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
@@ -144,6 +145,8 @@ func win():
 	state = GameState.WIN
 	game_running = false
 	player.set_physics_process(false)
+	alarm_snooze.set_process(false)
+	alarm_snooze.zzz_label.visible = false
 	win_popup.visible = true
 	if stress < 30:
 		message_label.text = "🌟 Perfect! No stress at all!\nScore: A+"
@@ -160,6 +163,8 @@ func game_over(reason: String = ""):
 	state = GameState.GAME_OVER
 	game_running = false
 	player.set_physics_process(false)
+	alarm_snooze.set_process(false)
+	alarm_snooze.zzz_label.visible = false
 	gameover_popup.visible = true
 	if stress >= max_stress:
 		gameover_message.text = "😵 Burned out from stress!\nTake it easy next time."
@@ -169,7 +174,7 @@ func game_over(reason: String = ""):
 		gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
-	get_tree().change_scene_to_file("res://Scene/canteen.tscn")
+	get_tree().change_scene_to_file("res://Scene/level2.tscn")
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()

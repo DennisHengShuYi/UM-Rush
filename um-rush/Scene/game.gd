@@ -139,7 +139,7 @@ func spawn_obstacle_at(spawn_x: float, spawn_y: float):
 func spawn_goal():
 	var goal = goal_scene.instantiate()
 	add_child(goal)
-	goal.position = Vector2(player.position.x + 2000, lanes[1])  # bottom lane
+	goal.position = Vector2(player.position.x + 2000, lanes[0])  # bottom lane
 
 func win():
 	state = GameState.WIN
@@ -174,7 +174,7 @@ func game_over(reason: String = ""):
 		gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
-	get_tree().change_scene_to_file("res://Scene/level2.tscn")
+	get_tree().change_scene_to_file("res://Scene/canteen.tscn")
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()

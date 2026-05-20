@@ -1,14 +1,14 @@
-[gd_scene format=3 uid="uid://vjsqhoeakup3"]
+[gd_scene format=3 uid="uid://dec11alri3ae1"]
 
-[ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_4jv7b"]
-[ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="1_mhtsl"]
-[ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_8f6ah"]
-[ext_resource type="Texture2D" uid="uid://hkfmq5dqrf02" path="res://assets/1.png" id="5_twwsd"]
-[ext_resource type="Texture2D" uid="uid://ile3tt0pb6a6" path="res://assets/2.png" id="6_c6b8m"]
-[ext_resource type="Texture2D" uid="uid://0bpjpinx4mi5" path="res://assets/3.png" id="7_0ka5k"]
-[ext_resource type="Texture2D" uid="uid://drd78voywjhl0" path="res://assets/4.png" id="8_ha7wd"]
-[ext_resource type="Texture2D" uid="uid://cdu44ure8iohx" path="res://assets/5.png" id="9_yjs1f"]
-[ext_resource type="Texture2D" uid="uid://cubcxi2xww1v4" path="res://assets/6.png" id="10_vyw1f"]
+[ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_0v1td"]
+[ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="2_84swh"]
+[ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_05clk"]
+[ext_resource type="Texture2D" uid="uid://hkfmq5dqrf02" path="res://assets/1.png" id="4_aobsl"]
+[ext_resource type="Texture2D" uid="uid://ile3tt0pb6a6" path="res://assets/2.png" id="5_ocd53"]
+[ext_resource type="Texture2D" uid="uid://0bpjpinx4mi5" path="res://assets/3.png" id="6_qr0na"]
+[ext_resource type="Texture2D" uid="uid://drd78voywjhl0" path="res://assets/4.png" id="7_yl8lo"]
+[ext_resource type="Texture2D" uid="uid://cdu44ure8iohx" path="res://assets/5.png" id="8_wnpx4"]
+[ext_resource type="Texture2D" uid="uid://cubcxi2xww1v4" path="res://assets/6.png" id="9_vrd2y"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
@@ -54,9 +54,9 @@ corner_radius_bottom_left = 12
 
 [node name="Game" type="Node2D" unique_id=1280767070]
 position = Vector2(228.2, 742)
-script = ExtResource("1_4jv7b")
+script = ExtResource("1_0v1td")
 
-[node name="Player" parent="." unique_id=416136360 instance=ExtResource("1_mhtsl")]
+[node name="Player" parent="." unique_id=416136360 instance=ExtResource("2_84swh")]
 z_index = 2
 position = Vector2(-165, -628)
 
@@ -71,7 +71,7 @@ shape = SubResource("WorldBoundaryShape2D_twwsd")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1903530315]
 position = Vector2(43682.004, 257.00003)
 scale = Vector2(49.133793, 0.37333336)
-texture = ExtResource("3_8f6ah")
+texture = ExtResource("3_05clk")
 
 [node name="TextureRect" type="TextureRect" parent="StaticBody2D" unique_id=597426920]
 custom_minimum_size = Vector2(1280, 500)
@@ -89,7 +89,7 @@ scroll_offset = Vector2(236.2, 742)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D" unique_id=2119635255]
 position = Vector2(-177.50015, -633.25)
 scale = Vector2(4.432292, 4.433642)
-texture = ExtResource("5_twwsd")
+texture = ExtResource("4_aobsl")
 
 [node name="Parallax2D2" type="Parallax2D" parent="ParallaxBackground" unique_id=1335660166]
 scroll_offset = Vector2(236.2, 742)
@@ -98,7 +98,7 @@ autoscroll = Vector2(0.1, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D2" unique_id=38536438]
 position = Vector2(-177.50029, -622.75)
 scale = Vector2(4.435765, 4.3935184)
-texture = ExtResource("6_c6b8m")
+texture = ExtResource("5_ocd53")
 
 [node name="Parallax2D3" type="Parallax2D" parent="ParallaxBackground" unique_id=2019278636]
 scroll_offset = Vector2(0, 742)
@@ -107,7 +107,7 @@ repeat_size = Vector2(0.2, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=1388718727]
 position = Vector2(47.500023, -617)
 scale = Vector2(4.421875, 4.419753)
-texture = ExtResource("7_0ka5k")
+texture = ExtResource("6_qr0na")
 
 [node name="Parallax2D4" type="Parallax2D" parent="ParallaxBackground" unique_id=990399225]
 scroll_offset = Vector2(236.2, 742)
@@ -116,7 +116,7 @@ autoscroll = Vector2(0.3, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D4" unique_id=124699772]
 position = Vector2(-165.50012, -623.5)
 scale = Vector2(4.4288197, 4.453704)
-texture = ExtResource("8_ha7wd")
+texture = ExtResource("7_yl8lo")
 
 [node name="Parallax2D5" type="Parallax2D" parent="ParallaxBackground" unique_id=1498259918]
 scroll_offset = Vector2(236.2, 742)
@@ -125,7 +125,7 @@ autoscroll = Vector2(0.5, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D5" unique_id=665127858]
 position = Vector2(-163.50002, -626)
 scale = Vector2(4.4322915, 4.438272)
-texture = ExtResource("9_yjs1f")
+texture = ExtResource("8_wnpx4")
 
 [node name="Parallax2D6" type="Parallax2D" parent="ParallaxBackground" unique_id=1987192717]
 scroll_offset = Vector2(362, 807)
@@ -134,7 +134,7 @@ autoscroll = Vector2(0.6, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D6" unique_id=1312734636]
 position = Vector2(-167.50009, -637.75)
 scale = Vector2(4.4253473, 4.393518)
-texture = ExtResource("10_vyw1f")
+texture = ExtResource("9_vrd2y")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=66158136]
 offset = Vector2(20, 0)
@@ -237,12 +237,12 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_c6b8m")
 text = "Retry →"
 
-[node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1270122081]
+[node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1537078139]
 offset_left = 534.0
 offset_top = 4.0
 offset_right = 742.0
 offset_bottom = 38.0
 theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
 theme_override_font_sizes/font_size = 24
-text = "Level 1 - Mahallah"
+text = "Level 2 - Canteen"
 horizontal_alignment = 1

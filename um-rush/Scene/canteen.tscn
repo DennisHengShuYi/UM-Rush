@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dec11alri3ae1"]
+[gd_scene format=3 uid="uid://cvg6ylgw4yfii"]
 
 [ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_0v1td"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="2_84swh"]
@@ -12,7 +12,7 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
-distance = 317.91135
+distance = -42.93088
 
 [sub_resource type="Gradient" id="Gradient_sagxc"]
 colors = PackedColorArray(0, 0, 0, 0.16078432, 0, 0, 0, 0.14901961)
@@ -65,7 +65,7 @@ position = Vector2(7.800003, -186)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=138756658]
-position = Vector2(50, 580)
+position = Vector2(-132, 495)
 shape = SubResource("WorldBoundaryShape2D_twwsd")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1903530315]
@@ -237,7 +237,7 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_c6b8m")
 text = "Retry →"
 
-[node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1537078139]
+[node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1270122081]
 offset_left = 534.0
 offset_top = 4.0
 offset_right = 742.0

@@ -101,8 +101,3 @@ position = Vector2(-857, 335)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2sr8w")
 animation = &"Jumping"
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=635941690]
-zoom = Vector2(0.5, 0.5)
-position_smoothing_enabled = true
-drag_horizontal_enabled = true

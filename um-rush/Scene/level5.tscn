@@ -217,7 +217,7 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.96249706, 0.37212738, 0.3666521, 1)
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_8f6ah")
-text = "Next Level →"
+text = "View Campus Map →"
 
 [node name="GameOverPopup" type="Panel" parent="CanvasLayer" unique_id=1142406699]
 visible = false

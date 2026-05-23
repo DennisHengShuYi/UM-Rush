@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://bownqcn2yhnht"]
+
+[ext_resource type="Script" uid="uid://cd14ytfji22xn" path="res://Scene/overworld.gd" id="1_6jwp1"]
+[ext_resource type="Texture2D" uid="uid://g0b5y8rq8gwv" path="res://assets/map.png" id="2_v726c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v726c"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nyb65"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_824ie"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omswd"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4qw5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Overworld" type="Node2D" unique_id=1485237498]
+script = ExtResource("1_6jwp1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2082222003]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=1369369682]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_v726c")
+expand_mode = 1
+
+[node name="Level1Button" type="Button" parent="CanvasLayer" unique_id=1479377624]
+offset_left = 157.0
+offset_top = 269.0
+offset_right = 327.0
+offset_bottom = 318.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_v726c")
+
+[node name="Level2Button" type="Button" parent="CanvasLayer" unique_id=1818864039]
+offset_left = 178.0
+offset_top = 623.0
+offset_right = 324.0
+offset_bottom = 669.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_nyb65")
+
+[node name="Level3Button" type="Button" parent="CanvasLayer" unique_id=1806511192]
+offset_left = 551.0
+offset_top = 424.0
+offset_right = 736.0
+offset_bottom = 472.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_824ie")
+
+[node name="Level4Button" type="Button" parent="CanvasLayer" unique_id=891758207]
+offset_left = 916.0
+offset_top = 335.0
+offset_right = 1137.0
+offset_bottom = 384.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_omswd")
+
+[node name="Level5Button" type="Button" parent="CanvasLayer" unique_id=1279373763]
+offset_left = 952.0
+offset_top = 631.0
+offset_right = 1142.0
+offset_bottom = 682.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_m4qw5")

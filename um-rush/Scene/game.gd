@@ -12,6 +12,7 @@ extends Node2D
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 @onready var camera = $Camera2D
 @onready var alarm_snooze = $AlarmSnooze
+@onready var pause_menu = $PauseLayer/PauseMenu
 
 enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
@@ -177,6 +178,9 @@ func _on_retry_pressed():
 
 func _input(event):
 	pass
+
+func _on_pause_button_pressed():
+	pause_menu.toggle_pause()
 
 func _on_player_hit_obstacle():
 	stress = clamp(stress + 40.0, 0, max_stress)

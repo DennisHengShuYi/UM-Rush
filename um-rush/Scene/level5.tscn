@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3p0bs2wm0di7" path="res://Scene/level5_game.gd" id="1_r306y"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="2_8wf31"]
+[ext_resource type="PackedScene" uid="uid://pjgta1688spg" path="res://Scene/pause_menu.tscn" id="2_pause"]
 [ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_eug5s"]
 [ext_resource type="Texture2D" uid="uid://ft5wxkem1jhi" path="res://assets/Background_345/5/Sky.png" id="4_8wf31"]
 [ext_resource type="Texture2D" uid="uid://cgml4pyxl5yej" path="res://assets/Background_345/5/houses1.png" id="5_eug5s"]
@@ -263,6 +264,22 @@ theme_override_font_sizes/font_size = 24
 text = "Level 5 - DTC"
 horizontal_alignment = 1
 
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=-2072745074]
+layer = 10
+
+[node name="PauseMenu" parent="PauseLayer" unique_id=1804732197 instance=ExtResource("2_pause")]
+
+[node name="PauseButton" type="Button" parent="PauseLayer" unique_id=-961633963]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -103.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 51.0
+grow_horizontal = 0
+text = "Pause"
+
 [node name="QnaMechanic" type="Node" parent="." unique_id=-2072745075]
 script = ExtResource("8_r306y")
 
@@ -270,3 +287,5 @@ script = ExtResource("8_r306y")
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

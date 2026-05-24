@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ecv76te26a5y" path="res://Scene/level4_game.gd" id="1_2m3v2"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="2_jtl1p"]
+[ext_resource type="PackedScene" uid="uid://pjgta1688spg" path="res://Scene/pause_menu.tscn" id="2_pause"]
 [ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_bu786"]
 [ext_resource type="Texture2D" uid="uid://c52bvnxco6hdh" path="res://assets/Background_345/4/sky.png" id="4_jtl1p"]
 [ext_resource type="Texture2D" uid="uid://dc5met5x8yfaq" path="res://assets/Background_345/4/houses3.png" id="5_bu786"]
@@ -256,6 +257,22 @@ theme_override_font_sizes/font_size = 24
 text = "Level 4 - FSKTM"
 horizontal_alignment = 1
 
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=-2072745074]
+layer = 10
+
+[node name="PauseMenu" parent="PauseLayer" unique_id=261288071 instance=ExtResource("2_pause")]
+
+[node name="PauseButton" type="Button" parent="PauseLayer" unique_id=-961633963]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -103.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 51.0
+grow_horizontal = 0
+text = "Pause"
+
 [node name="WifiVisibility" type="Node" parent="." unique_id=-2072745075]
 script = ExtResource("7_2m3v2")
 
@@ -263,3 +280,5 @@ script = ExtResource("7_2m3v2")
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

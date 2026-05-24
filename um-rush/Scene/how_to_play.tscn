@@ -1,0 +1,251 @@
+[gd_scene format=3 uid="uid://b2jpflga0i88e"]
+
+[ext_resource type="Script" uid="uid://6nmpcyk5d1yf" path="res://Scene/how_to_play.gd" id="1_fhiku"]
+[ext_resource type="Texture2D" uid="uid://bcqam3advgw5a" path="res://assets/main_menu_bg.jpg" id="1_soife"]
+[ext_resource type="FontFile" uid="uid://4hgw8cduu67v" path="res://GrapeSoda.ttf" id="1_y2r7m"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fhiku"]
+texture = ExtResource("1_soife")
+modulate_color = Color(0.40146014, 0.40146014, 0.40146014, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_da2n4"]
+bg_color = Color(0.58431375, 0.58431375, 0.58431375, 0.5882353)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_soife"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhiku"]
+bg_color = Color(0.40146014, 0.40146014, 0.40146014, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xlgku"]
+bg_color = Color(0.6060847, 0.6060851, 0.606085, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tq38s"]
+
+[node name="HowToPlay" type="Control" unique_id=188688683]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fhiku")
+
+[node name="background" type="Panel" parent="." unique_id=517845786]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_fhiku")
+
+[node name="title" type="Label" parent="." unique_id=1779466407]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -217.5
+offset_top = 21.0
+offset_right = 217.5
+offset_bottom = 101.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_y2r7m")
+theme_override_font_sizes/font_size = 80
+text = "HOW TO PLAY"
+
+[node name="controls" type="Panel" parent="." unique_id=209226152]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -559.0
+offset_top = -229.0
+offset_right = -167.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_da2n4")
+
+[node name="instructions" type="RichTextLabel" parent="controls" unique_id=1118792740]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = -96.5
+offset_right = 110.5
+offset_bottom = 97.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "[b]CONTROLS[/b]
+1. ➡️ Move  
+2. ⬆️ / ⬇️ Switch Lanes  
+3. Space / Enter → Jump  
+4. Shift → Panic Dash  
+5. A → Roll  
+6. ESC → Pause  "
+
+[node name="tips" type="Panel" parent="." unique_id=774525509]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -228.0
+offset_right = 598.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_da2n4")
+
+[node name="instructions" type="RichTextLabel" parent="tips" unique_id=530149103]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.5
+offset_top = -91.0
+offset_right = 296.5
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "[b]TIPS BY LEVEL[/b]
+
+• Residential College (Level 1): Stay awake to avoid falling asleep mid-run  
+• Canteen (Level 2): Collect food to restore hunger  
+• Library (Level 3): Keep quiet or the librarian will chase you  
+• FSKTM (Level 4): Low WiFi reduces visibility of obstacles  
+• DTC (Level 5): Answer questions correctly or gain extra stress  "
+
+[node name="rules" type="Panel" parent="." unique_id=1049830756]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = 28.0
+offset_right = 588.0
+offset_bottom = 241.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_da2n4")
+
+[node name="instructions" type="RichTextLabel" parent="rules" unique_id=1871782733]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.5
+offset_top = -93.5
+offset_right = 253.5
+offset_bottom = 73.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "[b]CORE RULES[/b]
+
+• Time is always ticking  
+• Getting hit increases stress  
+• Max stress = game over  
+• Each level has special mechanics — watch for warnings on screen"
+
+[node name="objectives" type="Panel" parent="." unique_id=893555248]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = 28.0
+offset_right = -163.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_da2n4")
+
+[node name="instructions" type="RichTextLabel" parent="objectives" unique_id=1700389091]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -178.0
+offset_top = -88.0
+offset_right = 180.5
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "[b]OBJECTIVE[/b]
+
+1. Reach the exam hall on time.
+
+2. Manage your stress while surviving each stage’s unique hazards."
+
+[node name="back_button" type="Button" parent="." unique_id=1422477145]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -113.5
+offset_top = -93.0
+offset_right = 113.5
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_soife")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fhiku")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xlgku")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tq38s")
+text = "BACK"
+
+[connection signal="pressed" from="back_button" to="." method="_on_back_button_pressed"]

@@ -12,6 +12,7 @@ extends Node2D
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 @onready var camera = $Camera2D
 @onready var qna_mechanic = $QnaMechanic
+@onready var pause_menu = $PauseLayer/PauseMenu
 @onready var score_state = get_node("/root/GameState")
 
 enum RunState { MENU, PLAYING, GAME_OVER, WIN }
@@ -79,7 +80,7 @@ func _build_shield_ui():
 	shield_label = Label.new()
 	shield_label.visible = false
 	shield_label.text = "Shield: 0s"
-	shield_label.position = Vector2(745, 2)
+	shield_label.position = Vector2(745, 34)
 	shield_label.size = Vector2(150, 32)
 	shield_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	shield_label.add_theme_font_size_override("font_size", 25)
@@ -307,7 +308,8 @@ func game_over(reason: String = ""):
 	gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
-	get_tree().change_scene_to_file("res://Scene/overworld.tscn")
+	#get_tree().change_scene_to_file("res://Scene/overworld.tscn")
+	get_tree().change_scene_to_file("res://Scene/ending_cut_screen.tscn")
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()
@@ -321,3 +323,6 @@ func _on_player_hit_obstacle():
 	stress_label.text = "Stress: " + str(int(stress)) + "%"
 	if stress >= max_stress:
 		game_over("😵 Burned out from stress!")
+
+func _on_pause_button_pressed():
+	pause_menu.toggle_pause()

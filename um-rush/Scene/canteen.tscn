@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://bk4o1rbpbtx2q" path="res://Scene/canteen_game.gd" id="1_0v1td"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="2_84swh"]
 [ext_resource type="Script" uid="uid://bshjb8txpj1k2" path="res://Scene/hunger_meter.gd" id="2_hngr"]
+[ext_resource type="PackedScene" uid="uid://pjgta1688spg" path="res://Scene/pause_menu.tscn" id="2_pause"]
 [ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_05clk"]
 [ext_resource type="Texture2D" uid="uid://dhlftynt3d742" path="res://assets/Background Canteen/1.png" id="4_0v1td"]
 [ext_resource type="Texture2D" uid="uid://bxor1i4r14hsy" path="res://assets/Background Canteen/2.png" id="5_84swh"]
-[ext_resource type="Texture2D" path="res://assets/Background/3.png" id="6_0v1td"]
 [ext_resource type="Texture2D" uid="uid://cdu44ure8iohx" path="res://assets/5.png" id="8_wnpx4"]
 [ext_resource type="Texture2D" uid="uid://cubcxi2xww1v4" path="res://assets/6.png" id="9_vrd2y"]
 
@@ -109,27 +109,22 @@ repeat_size = Vector2(0.2, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=1388718727]
 position = Vector2(-905, -639.00006)
 scale = Vector2(7.260937, 4.419753)
-texture = ExtResource("6_0v1td")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=561912187]
 position = Vector2(3814.9998, -610.00006)
 scale = Vector2(7.260937, 4.419753)
-texture = ExtResource("6_0v1td")
 
 [node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=454758132]
 position = Vector2(8452, -603.00006)
 scale = Vector2(7.260937, 4.419753)
-texture = ExtResource("6_0v1td")
 
 [node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=646572159]
 position = Vector2(13082, -590.00006)
 scale = Vector2(7.260937, 4.419753)
-texture = ExtResource("6_0v1td")
 
 [node name="Sprite2D5" type="Sprite2D" parent="ParallaxBackground/Parallax2D3" unique_id=580228887]
 position = Vector2(17725, -577)
 scale = Vector2(7.260937, 4.419753)
-texture = ExtResource("6_0v1td")
 
 [node name="Parallax2D4" type="Parallax2D" parent="ParallaxBackground" unique_id=990399225]
 scroll_offset = Vector2(236.2, 742)
@@ -264,6 +259,22 @@ theme_override_font_sizes/font_size = 24
 text = "Level 2 - Canteen"
 horizontal_alignment = 1
 
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=-2072745074]
+layer = 10
+
+[node name="PauseMenu" parent="PauseLayer" unique_id=715455884 instance=ExtResource("2_pause")]
+
+[node name="PauseButton" type="Button" parent="PauseLayer" unique_id=-961633963]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -103.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 51.0
+grow_horizontal = 0
+text = "Pause"
+
 [node name="HungerMeter" type="Node" parent="." unique_id=-2072745075]
 script = ExtResource("2_hngr")
 
@@ -271,3 +282,5 @@ script = ExtResource("2_hngr")
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

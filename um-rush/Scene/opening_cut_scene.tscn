@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://cuefalfprabjd"]
+
+[ext_resource type="Script" uid="uid://by5f26yuid3ij" path="res://Scene/opening_cut_scene.gd" id="1_ls2xl"]
+[ext_resource type="Texture2D" uid="uid://dos6hmghh170b" path="res://assets/Panel/panel1.jpg" id="2_ek48b"]
+[ext_resource type="Texture2D" uid="uid://midv4jdagj7w" path="res://assets/Panel/panel2.png" id="3_ek48b"]
+[ext_resource type="Texture2D" uid="uid://ck8h846r1l0e7" path="res://assets/Panel/panel3.jpg" id="4_5hqts"]
+[ext_resource type="Texture2D" uid="uid://cclu7vqxr402p" path="res://assets/Panel/panel4.png" id="5_mw3q3"]
+[ext_resource type="Texture2D" uid="uid://onakhihanlkn" path="res://assets/Panel/panel5.png" id="6_5hqts"]
+[ext_resource type="Texture2D" uid="uid://ds4s4mt6r1ag" path="res://assets/Panel/panel6.jpg" id="7_8tugs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ek48b"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="OpeningCutScene" type="Control" unique_id=1519738819]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ls2xl")
+panel_images = Array[Texture2D]([ExtResource("2_ek48b"), ExtResource("3_ek48b"), ExtResource("4_5hqts"), ExtResource("5_mw3q3"), ExtResource("6_5hqts"), ExtResource("7_8tugs")])
+
+[node name="background" type="ColorRect" parent="." unique_id=597193766]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="panel_image" type="TextureRect" parent="." unique_id=1288031564]
+layout_mode = 0
+offset_right = 1276.0
+offset_bottom = 608.0
+expand_mode = 1
+stretch_mode = 6
+
+[node name="dialogue_box" type="Panel" parent="." unique_id=1702920609]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -112.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ek48b")
+
+[node name="dialogue_text" type="Label" parent="dialogue_box" unique_id=1708870767]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = -87.0
+offset_right = -358.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "\"\""
+vertical_alignment = 1
+
+[node name="prompt_text" type="Label" parent="." unique_id=1847561248]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -271.0
+offset_top = -50.0
+offset_right = -38.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "Press SPACE to continue ➜"

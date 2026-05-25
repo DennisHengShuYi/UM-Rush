@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctfpo50gghqxv" path="res://Scene/game.gd" id="1_4jv7b"]
 [ext_resource type="PackedScene" uid="uid://dld58grvw1pp0" path="res://Scene/player.tscn" id="1_mhtsl"]
+[ext_resource type="PackedScene" uid="uid://pjgta1688spg" path="res://Scene/pause_menu.tscn" id="2_pause"]
 [ext_resource type="Script" uid="uid://i8fqmj1erlnk" path="res://Scene/alarm_snooze.gd" id="2_snooze"]
 [ext_resource type="Texture2D" uid="uid://bw6wl3njcyag2" path="res://assets/Toon Road Texture.png" id="3_8f6ah"]
 [ext_resource type="Texture2D" uid="uid://hkfmq5dqrf02" path="res://assets/1.png" id="5_twwsd"]
@@ -251,7 +252,25 @@ theme_override_font_sizes/font_size = 24
 text = "Level 1 - Residential College"
 horizontal_alignment = 1
 
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=-2072745074]
+layer = 10
+
+[node name="PauseMenu" parent="PauseLayer" unique_id=44078439 instance=ExtResource("2_pause")]
+
+[node name="PauseButton" type="Button" parent="PauseLayer" unique_id=-961633963]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -103.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 51.0
+grow_horizontal = 0
+text = "Pause"
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=50697388]
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

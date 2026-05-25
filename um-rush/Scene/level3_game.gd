@@ -12,6 +12,7 @@ extends Node2D
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 @onready var camera = $Camera2D
 @onready var noise_meter = $NoiseMeter
+@onready var pause_menu = $PauseLayer/PauseMenu
 
 enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
@@ -175,3 +176,6 @@ func _on_player_hit_obstacle():
 	noise_meter.add_noise(30.0)
 	if stress >= max_stress:
 		game_over("😵 Burned out from stress!")
+
+func _on_pause_button_pressed():
+	pause_menu.toggle_pause()

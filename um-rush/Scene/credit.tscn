@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://c6w1563ueqb1h"]
+
+[ext_resource type="Texture2D" uid="uid://bcqam3advgw5a" path="res://assets/main_menu_bg.jpg" id="1_3s75j"]
+[ext_resource type="Script" uid="uid://cc6pwg286t1om" path="res://Scene/credit.gd" id="1_x5nq7"]
+[ext_resource type="FontFile" uid="uid://4hgw8cduu67v" path="res://GrapeSoda.ttf" id="2_x5nq7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lq68i"]
+texture = ExtResource("1_3s75j")
+modulate_color = Color(0.40146014, 0.40146014, 0.40146014, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u3f35"]
+bg_color = Color(0.58431375, 0.58431375, 0.58431375, 0.5882353)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wyvr"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gens"]
+bg_color = Color(0.40146014, 0.40146014, 0.40146014, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_unkwt"]
+bg_color = Color(0.6060847, 0.6060851, 0.606085, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i1gup"]
+
+[node name="Credit" type="Control" unique_id=509439114]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x5nq7")
+
+[node name="background" type="Panel" parent="." unique_id=1169803035]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_lq68i")
+
+[node name="title" type="Label" parent="." unique_id=1388462065]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -114.0
+offset_top = 21.0
+offset_right = 116.0
+offset_bottom = 101.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_x5nq7")
+theme_override_font_sizes/font_size = 80
+text = "CREDIT"
+
+[node name="credit_card" type="Panel" parent="." unique_id=610964640]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -370.25
+offset_top = -227.0
+offset_right = 370.25
+offset_bottom = 227.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u3f35")
+
+[node name="credit_roll" type="RichTextLabel" parent="credit_card" unique_id=485326335]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.9375
+offset_top = -212.75
+offset_right = 271.9375
+offset_bottom = 212.75
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 28
+bbcode_enabled = true
+text = "[b]GAME TITLE[/b]
+UM Rush: The Last Semester
+
+[b]DEVELOPMENT TEAM[/b]
+Lead Developer: Dennis Heng Shu Yi
+Level Designer: Ng Sean Sean & Lam Xiao Jun 
+Gameplay Developer: Yen Hua Shen
+Art & Audio Designer: Tan Li Xin
+Menu & Narrative Designer:  Goh Shu Hui
+
+[b]GAME ENGINE[/b]
+Godot"
+
+[node name="back_button" type="Button" parent="." unique_id=1843905317]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -113.5
+offset_top = -93.0
+offset_right = 113.5
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_8wyvr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3gens")
+theme_override_styles/hover = SubResource("StyleBoxFlat_unkwt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i1gup")
+text = "BACK"
+
+[connection signal="pressed" from="back_button" to="." method="_on_back_button_pressed"]

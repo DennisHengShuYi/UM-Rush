@@ -12,6 +12,7 @@ extends Node2D
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 @onready var camera = $Camera2D
 @onready var qna_mechanic = $QnaMechanic
+@onready var pause_menu = $PauseLayer/PauseMenu
 
 enum GameState { MENU, PLAYING, GAME_OVER, WIN }
 var state = GameState.MENU
@@ -188,7 +189,8 @@ func game_over(reason: String = ""):
 	gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
-	get_tree().change_scene_to_file("res://Scene/overworld.tscn")
+	#get_tree().change_scene_to_file("res://Scene/overworld.tscn")
+	get_tree().change_scene_to_file("res://Scene/ending_cut_screen.tscn")
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()
@@ -199,3 +201,6 @@ func _on_player_hit_obstacle():
 	stress_label.text = "Stress: " + str(int(stress)) + "%"
 	if stress >= max_stress:
 		game_over("😵 Burned out from stress!")
+
+func _on_pause_button_pressed():
+	pause_menu.toggle_pause()

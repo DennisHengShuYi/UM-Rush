@@ -15,6 +15,10 @@ run/main_scene="uid://khtr7grbjx2m"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameState="*res://Scene/game_state.gd"
+
 [display]
 
 window/size/viewport_width=1280
@@ -45,6 +49,10 @@ roll={
 2d_physics/layer_2="player"
 2d_physics/layer_3="obstacle"
 2d_physics/layer_4="goal"
+2d_physics/layer_5="collectible"
+2d_physics/layer_6="enemy"
+2d_physics/layer_7="powerup"
+2d_physics/layer_8="cat"
 
 [physics]
 

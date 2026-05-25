@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://ci4wecc6woq7y"]
+
+[ext_resource type="Script" path="res://Scene/enemy.gd" id="1_enemy"]
+[ext_resource type="Texture2D" path="res://assets/boss_man.png" id="2_enemy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
+radius = 62.0
+
+[node name="Enemy" type="Area2D"]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_enemy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("2_enemy")
+
+[node name="BossLabel" type="Label" parent="."]
+offset_left = -76.0
+offset_top = -188.0
+offset_right = 76.0
+offset_bottom = -154.0
+theme_override_colors/font_color = Color(1, 0.05, 0.05, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 30
+text = "BOSS"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_enemy")

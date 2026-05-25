@@ -64,6 +64,9 @@ func _process(delta: float) -> void:
 		noise = max(noise - DRAIN_RATE * delta, 0.0)
 	else:
 		noise = min(noise + FILL_RATE * delta, 100.0)
+		var player = get_parent().get_node_or_null("Player")
+		if player and abs(player.velocity.x) > 50.0:
+			noise = min(noise + FILL_RATE * 1.5 * delta, 100.0)
 
 	if noise >= 100.0:
 		noise = 100.0

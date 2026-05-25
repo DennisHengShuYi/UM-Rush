@@ -12,16 +12,26 @@ extends Node2D
 @onready var retry_button = $CanvasLayer/GameOverPopup/VBoxContainer/RetryButton
 @onready var camera = $Camera2D
 @onready var noise_meter = $NoiseMeter
+@onready var score_state = get_node("/root/GameState")
 
-enum GameState { MENU, PLAYING, GAME_OVER, WIN }
-var state = GameState.MENU
+enum RunState { MENU, PLAYING, GAME_OVER, WIN }
+var state = RunState.MENU
 
 var desk_scene = preload("res://Scene/obstacle.tscn")
 var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")
 var goal_scene = preload("res://Scene/goal2.tscn")
+var enemy_scene = preload("res://Scene/enemy.tscn")
+var power_up_scene = preload("res://Scene/power_up.tscn")
+var campus_cat_scene = preload("res://Scene/campus_cat.tscn")
 
 var last_spawn_x = 0.0
 var spawn_distance = 800.0
+var last_enemy_x = 0.0
+var enemy_spawn_distance = 2100.0
+var last_powerup_x = 0.0
+var powerup_spawn_distance = 3200.0
+var cat_spawned = false
+var cat_spawn_distance = 17000.0
 var stress = 0.0
 var max_stress = 100.0
 var time_left = 60.0
@@ -30,12 +40,17 @@ var start_x = 0.0
 var goal_distance = 40000.0
 var goal_spawned = false
 var lanes = [-200.0, 0.0, 200.0]
+var score_label: Label
+var shield_label: Label
 
 func _ready():
 	stress_bar.max_value = max_stress
 	stress_bar.value = 0
 	win_popup.visible = false
 	gameover_popup.visible = false
+	_build_score_ui()
+	_build_shield_ui()
+	score_state.score_changed.connect(_on_score_changed)
 	next_button.pressed.connect(_on_next_level_pressed)
 	retry_button.pressed.connect(_on_retry_pressed)
 	camera.drag_vertical_enabled = false
@@ -43,6 +58,41 @@ func _ready():
 	player.hit_obstacle.connect(_on_player_hit_obstacle)
 	_show_start_notice()
 	start_game()
+
+func _build_score_ui():
+	score_label = Label.new()
+	score_label.text = "Score: 0"
+	score_label.position = Vector2(900, 2)
+	score_label.size = Vector2(300, 32)
+	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	score_label.add_theme_font_size_override("font_size", 25)
+	score_label.add_theme_color_override("font_color", Color(0.06, 0.23, 0.59))
+	$CanvasLayer.add_child(score_label)
+
+func _build_shield_ui():
+	shield_label = Label.new()
+	shield_label.visible = false
+	shield_label.text = "Shield: 0s"
+	shield_label.position = Vector2(745, 2)
+	shield_label.size = Vector2(150, 32)
+	shield_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	shield_label.add_theme_font_size_override("font_size", 25)
+	shield_label.add_theme_color_override("font_color", Color(0.0, 0.55, 0.95))
+	shield_label.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0, 0.9))
+	shield_label.add_theme_constant_override("outline_size", 3)
+	$CanvasLayer.add_child(shield_label)
+
+func _update_shield_ui():
+	if not shield_label:
+		return
+	var shield_time = player.get_shield_time_left()
+	shield_label.visible = shield_time > 0.0
+	if shield_label.visible:
+		shield_label.text = "Shield: %ds" % int(ceil(shield_time))
+
+func _on_score_changed(level_score: int, total_score: int):
+	if score_label:
+		score_label.text = "Score: %d | Total: %d" % [level_score, total_score]
 
 var notice_label: Label
 
@@ -65,13 +115,17 @@ func _show_start_notice():
 	)
 
 func start_game():
-	state = GameState.PLAYING
+	score_state.start_level(3)
+	state = RunState.PLAYING
 	game_running = true
 	time_left = 60.0
 	stress = 0.0
 	goal_spawned = false
 	start_x = player.position.x
 	last_spawn_x = player.position.x
+	last_enemy_x = player.position.x
+	last_powerup_x = player.position.x
+	cat_spawned = false
 
 func _process(delta: float) -> void:
 	if not game_running:
@@ -80,6 +134,7 @@ func _process(delta: float) -> void:
 	camera.global_position.y = 400.0
 	time_left -= delta
 	timer_label.text = "Time: " + str(int(time_left))
+	_update_shield_ui()
 	if time_left <= 0:
 		time_left = 0
 		game_over("⏰ You ran out of time!")
@@ -101,6 +156,15 @@ func _process(delta: float) -> void:
 			if player.position.x - last_spawn_x >= spawn_distance:
 				last_spawn_x = player.position.x
 				spawn_obstacles()
+			if player.position.x - last_enemy_x >= enemy_spawn_distance:
+				last_enemy_x = player.position.x
+				spawn_enemy("lane_shift")
+			if player.position.x - last_powerup_x >= powerup_spawn_distance:
+				last_powerup_x = player.position.x
+				spawn_powerup()
+			if not cat_spawned and distance_travelled >= cat_spawn_distance:
+				cat_spawned = true
+				spawn_cat()
 
 var last_was_double = false
 
@@ -135,8 +199,58 @@ func spawn_goal():
 	add_child(goal)
 	goal.position = Vector2(player.position.x + 2000, lanes[1])
 
+func spawn_enemy(pattern: String = "lane_shift"):
+	var enemy = enemy_scene.instantiate()
+	enemy.pattern = pattern
+	enemy.speed = 280.0
+	add_child(enemy)
+	enemy.position = Vector2(player.position.x + 1200.0, lanes[randi() % 3])
+
+func spawn_powerup():
+	var power = power_up_scene.instantiate()
+	power.power_type = ["stress", "speed", "shield"].pick_random()
+	add_child(power)
+	power.position = Vector2(player.position.x + 950.0, lanes[randi() % 3])
+
+func spawn_cat():
+	var cat = campus_cat_scene.instantiate()
+	cat.level_id = 3
+	add_child(cat)
+	cat.position = Vector2(player.position.x + 1100.0, lanes[randi() % 3])
+
+func collect_powerup(power_type: String):
+	score_state.record_powerup(power_type)
+	if power_type == "stress":
+		stress = 0.0
+	elif power_type == "speed":
+		player.apply_speed_boost()
+	elif power_type == "shield":
+		player.apply_shield()
+	stress_bar.value = stress
+	stress_label.text = "Stress: " + str(int(stress)) + "%"
+
+func collect_cat(level_id: int):
+	if score_state.record_cat(level_id):
+		stress = max(stress - 10.0, 0.0)
+		noise_meter.noise = max(noise_meter.noise - 20.0, 0.0)
+
+func handle_enemy_hit(_enemy):
+	score_state.record_hit()
+	stress = clamp(stress + 25.0, 0, max_stress)
+	noise_meter.add_noise(25.0)
+	if stress >= max_stress:
+		game_over("The library rush got too loud!")
+
+func finish_level_score(prefix: String) -> String:
+	score_state.finish_level({
+		"distance": player.position.x - start_x,
+		"time_left": time_left,
+		"stress": stress
+	})
+	return score_state.format_level_result(prefix)
+
 func win():
-	state = GameState.WIN
+	state = RunState.WIN
 	game_running = false
 	player.set_physics_process(false)
 	noise_meter.set_process(false)
@@ -150,11 +264,12 @@ func win():
 		message_label.text = "😅 A bit noisy...\nScore: B"
 	else:
 		message_label.text = "😵 The librarian is furious!\nScore: C"
+	message_label.text = finish_level_score("Stayed quiet enough to pass!")
 
 func game_over(reason: String = ""):
-	if state == GameState.GAME_OVER:
+	if state == RunState.GAME_OVER:
 		return
-	state = GameState.GAME_OVER
+	state = RunState.GAME_OVER
 	game_running = false
 	player.set_physics_process(false)
 	noise_meter.set_process(false)
@@ -169,6 +284,9 @@ func _on_retry_pressed():
 	get_tree().reload_current_scene()
 
 func _on_player_hit_obstacle():
+	if player.consume_shield():
+		return
+	score_state.record_hit()
 	stress = clamp(stress + 40.0, 0, max_stress)
 	stress_bar.value = stress
 	stress_label.text = "Stress: " + str(int(stress)) + "%"

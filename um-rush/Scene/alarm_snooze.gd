@@ -5,6 +5,7 @@ const FILL_RATE = 8.0
 # How much each Space tap reduces sleepiness.
 const TAP_REDUCE = 25.0
 var sleepiness := 0.0
+var pressure_mult := 1.0
 
 # UI created at runtime so no scene changes needed.
 var sleep_bar: ProgressBar
@@ -60,11 +61,14 @@ func _build_ui() -> void:
 	canvas.add_child(zzz_label)
 
 func _process(delta: float) -> void:
-	sleepiness += FILL_RATE * delta
+	sleepiness += FILL_RATE * pressure_mult * delta
 
 	if Input.is_action_just_pressed("snooze"):
 		sleepiness -= TAP_REDUCE
 		sleepiness = max(sleepiness, 0.0)
+		var score_state = get_node_or_null("/root/GameState")
+		if score_state:
+			score_state.record_snooze()
 
 	if sleepiness >= 100.0:
 		sleepiness = 100.0
@@ -82,3 +86,6 @@ func _process(delta: float) -> void:
 		sleep_bar_style.bg_color = Color(1.0, 0.8, 0.0)
 	else:
 		sleep_bar_style.bg_color = Color(0.2, 0.6, 1.0)
+
+func set_pressure(multiplier: float) -> void:
+	pressure_mult = max(multiplier, 1.0)

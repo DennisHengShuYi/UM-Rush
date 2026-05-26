@@ -1,7 +1,5 @@
 # 🏃‍♂️ UM-Rush (University of Malaya Final Exam Rush)
 
-![Game Banner](file:///c:/Users/den51/UM-Rush/um-rush/assets/main_menu_bg.jpg)
-
 **UM-Rush** is a fast-paced 2D side-scrolling lane-based runner game built in **Godot 4**. The game tells the frantic story of **Azri**, a student at the University of Malaya (UM) who wakes up late at 7:52 AM and must sprint across campus to reach the Dewan Tun Canselor (DTC) for his final exam at 8:00 AM. 
 
 Players must dodge obstacles, stay awake, grab food, sneak through the library, avoid dead WiFi zones, and answer computer science trivia to get to class on time and ace the exam!

@@ -10,6 +10,7 @@ extends Area2D
 
 var start_y := 0.0
 var alive_time := 0.0
+var assigned_lane := -1
 
 func _ready() -> void:
 	start_y = position.y
@@ -42,6 +43,8 @@ func _on_body_entered(body: Node) -> void:
 		parent.handle_enemy_hit(self)
 
 func _is_in_same_lane(body: Node) -> bool:
+	if assigned_lane != -1:
+		return body.get("current_lane") == assigned_lane
 	var parent := get_parent()
 	if not parent:
 		return true

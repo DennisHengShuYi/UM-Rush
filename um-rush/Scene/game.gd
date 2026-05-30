@@ -50,12 +50,15 @@ var start_x = 0.0
 var goal_distance = 40000.0
 var goal_spawned = false
 
-# Lane Y positions — must match player.gd lanes array
 var lanes = [-200.0, 0.0, 200.0]
 var score_label: Label
 var shield_label: Label
 var combo_label: Label
 var last_distance_streak_x := 0.0
+
+var shake_timer := 0.0
+var shake_intensity := 15.0
+var hit_flash_rect: ColorRect
 
 func _ready():
 	AudioManager.play_bgm(bgm)
@@ -72,6 +75,7 @@ func _ready():
 	camera.drag_vertical_enabled = false
 	camera.position_smoothing_enabled = false
 	player.hit_obstacle.connect(_on_player_hit_obstacle)
+	_build_hit_flash_ui()
 	
 	# Apply white outline for readability against bright backgrounds
 	timer_label.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0))
@@ -160,6 +164,13 @@ func _process(delta: float) -> void:
 
 	camera.global_position.x = player.global_position.x
 	camera.global_position.y = 400.0
+	
+	if shake_timer > 0.0:
+		shake_timer -= delta
+		camera.offset = Vector2(randf_range(-shake_intensity, shake_intensity), randf_range(-shake_intensity, shake_intensity))
+		if shake_timer <= 0.0:
+			camera.offset = Vector2.ZERO
+			
 	time_left -= delta
 	timer_label.text = "Time: " + str(int(time_left))
 	_update_shield_ui()
@@ -282,10 +293,12 @@ func spawn_enemy(pattern: String = "straight"):
 	var enemy = enemy_scene.instantiate()
 	enemy.pattern = pattern
 	enemy.speed = 240.0
-	var lane_y = lanes[randi() % 3]
+	var lane_index = randi() % 3
+	var lane_y = lanes[lane_index]
 	var spawn_x = get_safe_spawn_x(player.position.x + 1200.0, lane_y, 500.0)
 	add_child(enemy)
-	enemy.position = Vector2(spawn_x, lane_y - 30.0)
+	enemy.position = Vector2(spawn_x, lane_y - 90.0)
+	enemy.assigned_lane = lane_index
 
 func spawn_powerup():
 	var power = power_up_scene.instantiate()
@@ -326,9 +339,24 @@ func handle_enemy_hit(_enemy):
 		return
 	last_distance_streak_x = player.position.x
 	score_state.record_hit()
+	trigger_hit_effects()
 	stress = clamp(stress + 25.0, 0, max_stress)
 	if stress >= max_stress:
 		game_over("You were overwhelmed by campus traffic!")
+
+func _build_hit_flash_ui():
+	hit_flash_rect = ColorRect.new()
+	hit_flash_rect.color = Color(1.0, 0.0, 0.0, 0.0)
+	hit_flash_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	hit_flash_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$CanvasLayer.add_child(hit_flash_rect)
+
+func trigger_hit_effects():
+	shake_timer = 0.15
+	if hit_flash_rect:
+		hit_flash_rect.color.a = 0.4
+		var tween = create_tween()
+		tween.tween_property(hit_flash_rect, "color:a", 0.0, 0.2)
 
 func finish_level_score(prefix: String) -> String:
 	score_state.finish_level({
@@ -376,6 +404,31 @@ func game_over(reason: String = ""):
 		gameover_message.text = reason if reason != "" else "😵 Game Over!"
 
 func _on_next_level_pressed():
+	var transition_layer = CanvasLayer.new()
+	transition_layer.layer = 100
+	add_child(transition_layer)
+	
+	var overlay = ColorRect.new()
+	overlay.color = Color(0.08, 0.08, 0.15, 0.0)
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	transition_layer.add_child(overlay)
+	
+	var label = Label.new()
+	label.text = "Next stop: DTC Canteen!"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	label.add_theme_font_size_override("font_size", 36)
+	label.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0))
+	label.add_theme_constant_override("outline_size", 6)
+	label.modulate.a = 0.0
+	transition_layer.add_child(label)
+	
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(overlay, "color:a", 1.0, 0.5)
+	tween.tween_property(label, "modulate:a", 1.0, 0.5)
+	
+	await get_tree().create_timer(2.0).timeout
 	get_tree().change_scene_to_file("res://Scene/canteen.tscn")
 
 func _on_retry_pressed():
@@ -394,6 +447,7 @@ func _on_player_hit_obstacle():
 	if player.consume_shield():
 		return
 	score_state.record_hit()
+	trigger_hit_effects()
 	stress = clamp(stress + 40.0, 0, max_stress)
 	stress_bar.value = stress
 	stress_label.text = "Stress: " + str(int(stress)) + "%"

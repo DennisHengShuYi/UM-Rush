@@ -15,7 +15,8 @@ func play_bgm(stream: AudioStream):
 	
 	bgm_player.stop()
 	bgm_player.stream = stream
-	bgm_player.play()
+	if stream != null:
+		bgm_player.play()
 	current_bgm = stream
 
 func stop_bgm():

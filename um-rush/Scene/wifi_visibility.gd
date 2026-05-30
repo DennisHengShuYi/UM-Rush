@@ -8,6 +8,7 @@ var wifi_strength := 100.0
 const DRAIN_RATE = 3.0
 const RECOVER_RATE = 8.0
 var in_weak_zone := false
+var disruption_timer := 0.0
 
 func _ready() -> void:
 	_build_ui()
@@ -64,8 +65,15 @@ func _build_ui() -> void:
 func set_weak_zone(weak: bool) -> void:
 	in_weak_zone = weak
 
+func trigger_disruption(duration: float = 2.0) -> void:
+	disruption_timer = duration
+
 func _process(delta: float) -> void:
-	if in_weak_zone:
+	if disruption_timer > 0.0:
+		disruption_timer -= delta
+
+	var is_weak = in_weak_zone or (disruption_timer > 0.0)
+	if is_weak:
 		wifi_strength = max(wifi_strength - DRAIN_RATE * delta * 10, 0.0)
 	else:
 		wifi_strength = min(wifi_strength + RECOVER_RATE * delta * 10, 100.0)

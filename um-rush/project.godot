@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameState="*res://Scene/game_state.gd"
+AudioManager="*res://assets/AudioManager/AudioManager.gd"
 
 [display]
 
@@ -53,6 +54,7 @@ roll={
 2d_physics/layer_6="enemy"
 2d_physics/layer_7="powerup"
 2d_physics/layer_8="cat"
+2d_physics/layer_9="big_obstacle"
 
 [physics]
 

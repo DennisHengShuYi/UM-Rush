@@ -65,6 +65,7 @@ func _physics_process(delta: float) -> void:
 			is_jumping = false
 			set_collision_mask_value(1, true)
 			set_collision_mask_value(3, true)
+			set_collision_mask_value(9, true)
 	else:
 		# Smooth lane slide when grounded
 		position.y = lerp(position.y, target_y, LANE_SPEED * delta)
@@ -104,6 +105,7 @@ func _physics_process(delta: float) -> void:
 			jump_velocity_y = JUMP_VELOCITY
 			set_collision_mask_value(1, false)
 			set_collision_mask_value(3, false)
+			set_collision_mask_value(9, false)
 			sfx_jump.play()
 
 		# Lane up
@@ -133,10 +135,29 @@ func _physics_process(delta: float) -> void:
 	# Obstacle hit detection
 	if hit_cooldown > 0:
 		hit_cooldown -= delta
-	if get_slide_collision_count() > 0 and hit_cooldown <= 0 and not is_rolling and not is_jumping:
-		hit_obstacle.emit()
-		hit_cooldown = 1.0
-		sfx_hit.play()
+	if get_slide_collision_count() > 0 and hit_cooldown <= 0:
+		var hit_something = false
+		if not is_jumping:
+			if not is_rolling:
+				# Verify same lane check for standard obstacle
+				for i in range(get_slide_collision_count()):
+					var collision = get_slide_collision(i)
+					var collider = collision.get_collider()
+					if collider and _is_obstacle_in_same_lane(collider):
+						hit_something = true
+						break
+			else:
+				# Check if rolling into a big obstacle (layer 9)
+				for i in range(get_slide_collision_count()):
+					var collision = get_slide_collision(i)
+					var collider = collision.get_collider()
+					if collider and collider.get_collision_layer_value(9) and _is_obstacle_in_same_lane(collider):
+						hit_something = true
+						break
+		if hit_something:
+			hit_obstacle.emit()
+			hit_cooldown = 1.0
+			sfx_hit.play()
 
 	# Animation
 	if is_jumping:
@@ -211,3 +232,13 @@ func _update_shield_visual() -> void:
 		return
 	var pulse := 1.0 + sin(Time.get_ticks_msec() / 120.0) * 0.04
 	shield_visual.scale = Vector2(pulse, pulse)
+
+func _is_obstacle_in_same_lane(collider: Node) -> bool:
+	var parent := get_parent()
+	if not parent:
+		return true
+	var parent_lanes = parent.get("lanes")
+	if parent_lanes == null:
+		return true
+	var player_lane_y = parent_lanes[current_lane]
+	return abs(collider.position.y - player_lane_y) < 100.0

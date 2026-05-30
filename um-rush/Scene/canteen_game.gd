@@ -34,11 +34,11 @@ var power_up_scene = preload("res://Scene/power_up.tscn")
 var campus_cat_scene = preload("res://Scene/campus_cat.tscn")
 
 var last_spawn_x = 0.0
-var spawn_distance = 950.0
+var spawn_distance = 1400.0
 var last_food_x = 0.0
 var food_spawn_distance = 1200.0
 var last_enemy_x = 0.0
-var enemy_spawn_distance = 2200.0
+var enemy_spawn_distance = 3300.0
 var last_powerup_x = 0.0
 var powerup_spawn_distance = 3000.0
 var cat_spawned = false
@@ -57,6 +57,8 @@ var goal_spawned = false
 var lanes = [-200.0, 0.0, 200.0]
 var score_label: Label
 var shield_label: Label
+var combo_label: Label
+var last_distance_streak_x := 0.0
 
 func _ready():
 	AudioManager.play_bgm(bgm)
@@ -66,31 +68,45 @@ func _ready():
 	gameover_popup.visible = false
 	_build_score_ui()
 	_build_shield_ui()
+	_build_combo_ui()
 	score_state.score_changed.connect(_on_score_changed)
 	next_button.pressed.connect(_on_next_level_pressed)
 	retry_button.pressed.connect(_on_retry_pressed)
 	camera.drag_vertical_enabled = false
 	camera.position_smoothing_enabled = false
 	player.hit_obstacle.connect(_on_player_hit_obstacle)
+	
+	# Apply white outline for readability against bright backgrounds
+	timer_label.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0))
+	timer_label.add_theme_constant_override("outline_size", 4)
+	stress_label.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0))
+	stress_label.add_theme_constant_override("outline_size", 4)
+	var lvl_lbl = $CanvasLayer.get_node_or_null("LevelLabel")
+	if lvl_lbl:
+		lvl_lbl.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0))
+		lvl_lbl.add_theme_constant_override("outline_size", 4)
+
 	_show_start_notice()
 	start_game()
 
 func _build_score_ui():
 	score_label = Label.new()
 	score_label.text = "Score: 0"
-	score_label.position = Vector2(900, 2)
+	score_label.position = Vector2(820, 2)
 	score_label.size = Vector2(300, 32)
 	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	score_label.add_theme_font_size_override("font_size", 25)
 	score_label.add_theme_color_override("font_color", Color(0.06, 0.23, 0.59))
+	score_label.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0))
+	score_label.add_theme_constant_override("outline_size", 4)
 	$CanvasLayer.add_child(score_label)
 
 func _build_shield_ui():
 	shield_label = Label.new()
 	shield_label.visible = false
 	shield_label.text = "Shield: 0s"
-	shield_label.position = Vector2(745, 34)
-	shield_label.size = Vector2(150, 32)
+	shield_label.position = Vector2(820, 34)
+	shield_label.size = Vector2(300, 32)
 	shield_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	shield_label.add_theme_font_size_override("font_size", 25)
 	shield_label.add_theme_color_override("font_color", Color(0.0, 0.55, 0.95))
@@ -98,17 +114,34 @@ func _build_shield_ui():
 	shield_label.add_theme_constant_override("outline_size", 3)
 	$CanvasLayer.add_child(shield_label)
 
+func _build_combo_ui():
+	combo_label = Label.new()
+	combo_label.text = "Streak: 0 (x1.0)"
+	combo_label.position = Vector2(820, 34)
+	combo_label.size = Vector2(300, 32)
+	combo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	combo_label.add_theme_font_size_override("font_size", 25)
+	combo_label.add_theme_color_override("font_color", Color(0.06, 0.23, 0.59))
+	combo_label.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0))
+	combo_label.add_theme_constant_override("outline_size", 4)
+	$CanvasLayer.add_child(combo_label)
+
 func _update_shield_ui():
-	if not shield_label:
+	if not shield_label or not combo_label:
 		return
 	var shield_time = player.get_shield_time_left()
 	shield_label.visible = shield_time > 0.0
 	if shield_label.visible:
 		shield_label.text = "Shield: %ds" % int(ceil(shield_time))
+		combo_label.position = Vector2(820, 66)
+	else:
+		combo_label.position = Vector2(820, 34)
 
 func _on_score_changed(level_score: int, total_score: int):
 	if score_label:
 		score_label.text = "Score: %d | Total: %d" % [level_score, total_score]
+	if combo_label:
+		combo_label.text = "Streak: %d (x%.1f)" % [score_state.streak, score_state.combo_multiplier]
 
 var notice_label: Label
 var notice_active = false
@@ -151,6 +184,7 @@ func start_game():
 	last_enemy_x = player.position.x
 	last_powerup_x = player.position.x
 	cat_spawned = false
+	last_distance_streak_x = player.position.x
 
 func _process(delta: float) -> void:
 	if not game_running:
@@ -161,6 +195,10 @@ func _process(delta: float) -> void:
 	time_left -= delta
 	timer_label.text = "Time: " + str(int(time_left))
 	_update_shield_ui()
+
+	if player.position.x - last_distance_streak_x >= 500.0:
+		last_distance_streak_x = player.position.x
+		score_state.increase_streak(1)
 	if time_left <= 0:
 		time_left = 0
 		game_over("⏰ You ran out of time!\nGet to class faster next time.")
@@ -222,15 +260,45 @@ func spawn_obstacles():
 		spawn_obstacle_at(spawn_x + 1100.0, lanes[1])
 		last_was_double = true
 
+func get_safe_spawn_x(desired_x: float, lane_y: float, min_distance: float = 400.0) -> float:
+	var safe_x = desired_x
+	var collision = true
+	var attempts = 0
+	while collision and attempts < 15:
+		collision = false
+		for child in get_children():
+			if child == null:
+				continue
+			var is_gameplay_object = false
+			if child is Area2D or child is StaticBody2D:
+				is_gameplay_object = true
+			if is_gameplay_object:
+				var y_diff = abs(child.position.y - lane_y)
+				if y_diff < 50.0:
+					if abs(child.position.x - safe_x) < min_distance:
+						safe_x = max(safe_x, child.position.x + min_distance)
+						collision = true
+						break
+				elif y_diff < 250.0:
+					if abs(child.position.x - safe_x) < 250.0:
+						safe_x = max(safe_x, child.position.x + 250.0)
+						collision = true
+						break
+		attempts += 1
+	return safe_x
+
 func spawn_obstacle_at(spawn_x: float, spawn_y: float):
+	spawn_x = get_safe_spawn_x(spawn_x, spawn_y, 450.0)
 	var obs = desk_scene.instantiate() if randi() % 2 == 0 else obstacle2_scene.instantiate()
 	add_child(obs)
 	obs.position = Vector2(spawn_x, spawn_y)
 
 func spawn_food():
 	var food = food_scene.instantiate()
+	var lane_y = lanes[randi() % 3]
+	var spawn_x = get_safe_spawn_x(player.position.x + 900.0, lane_y, 400.0)
 	add_child(food)
-	food.position = Vector2(player.position.x + 900.0, lanes[randi() % 3])
+	food.position = Vector2(spawn_x, lane_y)
 
 func spawn_goal():
 	var goal = goal_scene.instantiate()
@@ -241,23 +309,30 @@ func spawn_enemy(pattern: String = "wave"):
 	var enemy = enemy_scene.instantiate()
 	enemy.pattern = pattern
 	enemy.speed = 260.0
+	var lane_y = lanes[randi() % 3]
+	var spawn_x = get_safe_spawn_x(player.position.x + 1200.0, lane_y, 500.0)
 	add_child(enemy)
-	enemy.position = Vector2(player.position.x + 1200.0, lanes[randi() % 3])
+	enemy.position = Vector2(spawn_x, lane_y - 30.0)
 
 func spawn_powerup():
 	var power = power_up_scene.instantiate()
 	power.power_type = ["stress", "speed", "shield"].pick_random()
+	var lane_y = lanes[randi() % 3]
+	var spawn_x = get_safe_spawn_x(player.position.x + 950.0, lane_y, 400.0)
 	add_child(power)
-	power.position = Vector2(player.position.x + 950.0, lanes[randi() % 3])
+	power.position = Vector2(spawn_x, lane_y)
 
 func spawn_cat():
 	var cat = campus_cat_scene.instantiate()
 	cat.level_id = 2
+	var lane_y = lanes[randi() % 3]
+	var spawn_x = get_safe_spawn_x(player.position.x + 1100.0, lane_y, 450.0)
 	add_child(cat)
-	cat.position = Vector2(player.position.x + 1100.0, lanes[randi() % 3])
+	cat.position = Vector2(spawn_x, lane_y)
 
 func collect_food():
 	sfx_food.play()
+	score_state.increase_streak(1)
 	score_state.add_score(40)
 	hunger_meter.eat_food()
 
@@ -280,6 +355,9 @@ func collect_cat(level_id: int):
 		hunger_meter.eat_food()
 
 func handle_enemy_hit(_enemy):
+	if state != RunState.PLAYING:
+		return
+	last_distance_streak_x = player.position.x
 	score_state.record_hit()
 	stress = clamp(stress + 25.0, 0, max_stress)
 	if hunger_meter.has_method("eat_food"):
@@ -314,7 +392,7 @@ func win():
 	message_label.text = finish_level_score("Escaped the canteen rush!")
 
 func game_over(reason: String = ""):
-	if state == RunState.GAME_OVER:
+	if state != RunState.PLAYING:
 		return
 	state = RunState.GAME_OVER
 	game_running = false
@@ -343,6 +421,9 @@ func _on_pause_button_pressed():
 	pause_menu.toggle_pause()
 
 func _on_player_hit_obstacle():
+	if state != RunState.PLAYING:
+		return
+	last_distance_streak_x = player.position.x
 	if player.consume_shield():
 		return
 	score_state.record_hit()

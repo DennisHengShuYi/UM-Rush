@@ -65,3 +65,12 @@ offset_top = 631.0
 offset_right = 1142.0
 offset_bottom = 682.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_m4qw5")
+
+[node name="MenuButton" type="Button" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 180.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 20
+text = "⬅ Main Menu"
+

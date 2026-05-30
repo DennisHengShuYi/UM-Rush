@@ -1,5 +1,6 @@
-[gd_scene format=3 uid="uid://b63ubmnfn2dry"]
+[gd_scene load_steps=4 format=3 uid="uid://b63ubmnfn2dry"]
 
+[ext_resource type="Script" uid="uid://8ha7sywpvkty" path="res://Scene/obstacle.gd" id="2_script"]
 [ext_resource type="Texture2D" uid="uid://btwlywy1tgr13" path="res://assets/obstacle_1-removebg-preview.png" id="1_ogkn3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ogkn3"]
@@ -8,6 +9,7 @@ size = Vector2(29.333328, 20.69236)
 [node name="obstacle" type="StaticBody2D" unique_id=923424583]
 collision_layer = 4
 collision_mask = 0
+script = ExtResource("2_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1766595804]
 scale = Vector2(1.5, 1.5)

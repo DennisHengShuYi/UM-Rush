@@ -60,13 +60,17 @@ func add_noise(amount: float) -> void:
 	noise = clamp(noise + amount, 0.0, 100.0)
 
 func _process(delta: float) -> void:
+	var player = get_parent().get_node_or_null("Player")
 	if Input.is_action_pressed("tiptoe"):
 		noise = max(noise - DRAIN_RATE * delta, 0.0)
+		if player:
+			player.speed_mult = 0.8
 	else:
 		noise = min(noise + FILL_RATE * delta, 100.0)
-		var player = get_parent().get_node_or_null("Player")
-		if player and abs(player.velocity.x) > 50.0:
-			noise = min(noise + FILL_RATE * 1.5 * delta, 100.0)
+		if player:
+			player.speed_mult = 1.0
+			if abs(player.velocity.x) > 50.0:
+				noise = min(noise + FILL_RATE * 1.5 * delta, 100.0)
 
 	if noise >= 100.0:
 		noise = 100.0

@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://c640dq0ys8wyf" path="res://Scene/enemy.gd" id="1_enemy"]
 [ext_resource type="Texture2D" uid="uid://yl8fnnlcl7g6" path="res://assets/Sprite/boss/boss_l1.png" id="2_4jekx"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
-radius = 62.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
+size = Vector2(80, 350)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4jekx"]
 atlas = ExtResource("2_4jekx")
@@ -63,7 +63,7 @@ script = ExtResource("1_enemy")
 
 [node name="BossLabel" type="Label" parent="." unique_id=1525647380]
 offset_left = -76.0
-offset_top = -188.0
+offset_top = -350.0
 offset_right = 76.0
 offset_bottom = -154.0
 theme_override_colors/font_color = Color(1, 0.05, 0.05, 1)
@@ -74,7 +74,7 @@ text = "BOSS"
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=28246362]
-shape = SubResource("CircleShape2D_enemy")
+shape = SubResource("RectangleShape2D_enemy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1748451141]
 scale = Vector2(3.5, 3.5)

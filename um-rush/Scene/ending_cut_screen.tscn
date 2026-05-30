@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://r1ysblxgxgrn" path="res://Scene/ending_cut_screen.gd" id="1_ls2xl"]
 [ext_resource type="Texture2D" uid="uid://cs52qqrcovpjm" path="res://assets/Panel/panel7.png" id="2_ek48b"]
 [ext_resource type="Texture2D" uid="uid://coali56b8lemo" path="res://assets/Panel/panel8.png" id="3_ek48b"]
+[ext_resource type="AudioStream" uid="uid://4ek16gajmgi0" path="res://assets/audio/bgm/bgm_end.mp3" id="4_qe7g3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqvdr"]
 bg_color = Color(1, 1, 1, 1)
@@ -20,6 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ls2xl")
 panel_images = Array[Texture2D]([ExtResource("2_ek48b"), ExtResource("3_ek48b")])
+bgm = ExtResource("4_qe7g3")
 
 [node name="background" type="ColorRect" parent="." unique_id=308955207]
 layout_mode = 1

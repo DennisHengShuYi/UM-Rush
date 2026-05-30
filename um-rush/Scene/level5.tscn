@@ -9,6 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://ba5k7ka4pme3x" path="res://assets/Background_345/5/houses.png" id="7_8wf31"]
 [ext_resource type="Texture2D" uid="uid://cfkjwicsyqh71" path="res://assets/Background_345/5/fountain&bush.png" id="8_eug5s"]
 [ext_resource type="Script" uid="uid://bwil7g4ps1etl" path="res://Scene/qna_mechanic.gd" id="8_r306y"]
+[ext_resource type="AudioStream" uid="uid://dcy873x2q311y" path="res://assets/audio/bgm/bgm_L5.ogg" id="10_eug5s"]
+[ext_resource type="AudioStream" uid="uid://bxxxekgjc0uxc" path="res://assets/audio/sfx/ribhavagrawal-game-over.mp3" id="11_ymmbi"]
+[ext_resource type="AudioStream" uid="uid://dbuyh14r3spqn" path="res://assets/audio/sfx/sfx_win.mp3" id="12_dftxh"]
+[ext_resource type="AudioStream" uid="uid://d0dald72l6i1l" path="res://assets/audio/sfx/sfx_cat.mp3" id="13_ttup1"]
+[ext_resource type="AudioStream" uid="uid://qdrk50ywd77o" path="res://assets/audio/sfx/sfx_powerup.mp3" id="14_jy2n2"]
+[ext_resource type="AudioStream" uid="uid://byo0gnjuhylas" path="res://assets/audio/sfx/sfx_correct.wav" id="15_ltfxn"]
+[ext_resource type="AudioStream" uid="uid://dn6je4dw4qbib" path="res://assets/audio/sfx/sfx_wrong.wav" id="16_huomh"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
@@ -58,6 +65,7 @@ corner_radius_bottom_left = 12
 [node name="L5" type="Node2D" unique_id=1280767070]
 position = Vector2(232.2, 745)
 script = ExtResource("1_r306y")
+bgm = ExtResource("10_eug5s")
 
 [node name="Player" parent="." unique_id=416136360 instance=ExtResource("2_8wf31")]
 z_index = 2
@@ -287,5 +295,31 @@ script = ExtResource("8_r306y")
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[node name="SFX_GameOver" type="AudioStreamPlayer" parent="." unique_id=1806569781]
+stream = ExtResource("11_ymmbi")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="SFX_Win" type="AudioStreamPlayer" parent="." unique_id=1110353168]
+stream = ExtResource("12_dftxh")
+volume_db = 16.0
+bus = &"SFX"
+
+[node name="SFX_Cat" type="AudioStreamPlayer" parent="." unique_id=1743195920]
+stream = ExtResource("13_ttup1")
+bus = &"SFX"
+
+[node name="SFX_PowerUp" type="AudioStreamPlayer" parent="." unique_id=712608104]
+stream = ExtResource("14_jy2n2")
+bus = &"SFX"
+
+[node name="SFX_CorrectAns" type="AudioStreamPlayer" parent="." unique_id=801070098]
+stream = ExtResource("15_ltfxn")
+bus = &"SFX"
+
+[node name="SFX_WrongAns" type="AudioStreamPlayer" parent="." unique_id=2027814060]
+stream = ExtResource("16_huomh")
+bus = &"SFX"
 
 [connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

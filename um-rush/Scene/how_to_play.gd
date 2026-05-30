@@ -1,8 +1,10 @@
 extends Control
 
+@export var bgm: AudioStream
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	AudioManager.play_bgm(bgm)
 	pass # Replace with function body.
 
 

@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bcqam3advgw5a" path="res://assets/main_menu_bg.jpg" id="1_3s75j"]
 [ext_resource type="Script" uid="uid://cc6pwg286t1om" path="res://Scene/credit.gd" id="1_x5nq7"]
 [ext_resource type="FontFile" uid="uid://4hgw8cduu67v" path="res://GrapeSoda.ttf" id="2_x5nq7"]
+[ext_resource type="AudioStream" uid="uid://b6v378mmlinf8" path="res://assets/audio/bgm/bgm_menu.ogg" id="4_lq68i"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lq68i"]
 texture = ExtResource("1_3s75j")
@@ -46,6 +47,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x5nq7")
+bgm = ExtResource("4_lq68i")
 
 [node name="background" type="Panel" parent="." unique_id=1169803035]
 layout_mode = 1

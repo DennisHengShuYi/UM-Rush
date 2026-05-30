@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://bk1l3mjitwo6c"]
 
-[ext_resource type="Script" path="res://Scene/campus_cat.gd" id="1_cat"]
-[ext_resource type="Texture2D" path="res://assets/campus_cat.png" id="2_cat"]
+[ext_resource type="Script" uid="uid://b8y621ylkms33" path="res://Scene/campus_cat.gd" id="1_cat"]
+[ext_resource type="Texture2D" uid="uid://8ltygfkvjq4f" path="res://assets/campus_cat.png" id="2_cat"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cat"]
 radius = 58.0
 
-[node name="CampusCat" type="Area2D"]
+[node name="CampusCat" type="Area2D" unique_id=1208254210]
 collision_layer = 128
 collision_mask = 2
 script = ExtResource("1_cat")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=916921363]
 scale = Vector2(0.14, 0.14)
 texture = ExtResource("2_cat")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=955595489]
 shape = SubResource("CircleShape2D_cat")

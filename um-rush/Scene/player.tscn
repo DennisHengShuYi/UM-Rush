@@ -15,6 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://bajtpfaqoxhgw" path="res://assets/roll5.png" id="9_lhccw"]
 [ext_resource type="Texture2D" uid="uid://mts4bkex23ob" path="res://assets/frame-4.png" id="10_lhccw"]
 [ext_resource type="Texture2D" uid="uid://c5tye16njxrji" path="res://assets/frame-6.png" id="11_7d6xm"]
+[ext_resource type="AudioStream" uid="uid://brd4owbksxgj8" path="res://assets/audio/sfx/sfx_jump.wav" id="16_eqmt2"]
+[ext_resource type="AudioStream" uid="uid://dbjf5ege7govl" path="res://assets/audio/sfx/sfx_hit.mp3" id="17_lhccw"]
+[ext_resource type="AudioStream" uid="uid://qdrk50ywd77o" path="res://assets/audio/sfx/sfx_powerup.mp3" id="18_7d6xm"]
+[ext_resource type="AudioStream" uid="uid://bl3ru7q5iu4no" path="res://assets/audio/sfx/sfx_roll.mp3" id="19_2sr8w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y8w33"]
 radius = 120.36
@@ -100,4 +104,23 @@ shape = SubResource("CircleShape2D_y8w33")
 position = Vector2(-857, 335)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2sr8w")
-animation = &"Jumping"
+animation = &"Running"
+
+[node name="SFX_Jump" type="AudioStreamPlayer2D" parent="." unique_id=618702288]
+stream = ExtResource("16_eqmt2")
+volume_db = 16.0
+bus = &"SFX"
+
+[node name="SFX_Hit" type="AudioStreamPlayer2D" parent="." unique_id=396723797]
+stream = ExtResource("17_lhccw")
+volume_db = 14.0
+bus = &"SFX"
+
+[node name="SFX_Powerup" type="AudioStreamPlayer2D" parent="." unique_id=21296888]
+stream = ExtResource("18_7d6xm")
+volume_db = 16.0
+bus = &"SFX"
+
+[node name="SFX_Roll" type="AudioStreamPlayer2D" parent="." unique_id=1605716518]
+stream = ExtResource("19_2sr8w")
+volume_db = 16.0

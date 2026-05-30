@@ -1,21 +1,49 @@
 [gd_scene format=3 uid="uid://ci4wecc6woq7y"]
 
-[ext_resource type="Script" path="res://Scene/enemy.gd" id="1_enemy"]
-[ext_resource type="Texture2D" path="res://assets/boss_man.png" id="2_enemy"]
+[ext_resource type="Script" uid="uid://c640dq0ys8wyf" path="res://Scene/enemy.gd" id="1_enemy"]
+[ext_resource type="Texture2D" uid="uid://biognyyx0khv2" path="res://assets/boss_man.png" id="2_enemy"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4jekx"]
+load_path = "res://.godot/imported/boss_man.png-10d58ec7e9d074ae0bea50299e72d357.ctex"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
 radius = 62.0
 
-[node name="Enemy" type="Area2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_s685e"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"alert",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_enemy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_enemy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Area2D" unique_id=1268158602]
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_enemy")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2086852623]
+texture_filter = 1
 scale = Vector2(0.24, 0.24)
-texture = ExtResource("2_enemy")
+texture = SubResource("CompressedTexture2D_4jekx")
 
-[node name="BossLabel" type="Label" parent="."]
+[node name="BossLabel" type="Label" parent="." unique_id=1525647380]
 offset_left = -76.0
 offset_top = -188.0
 offset_right = 76.0
@@ -27,5 +55,9 @@ theme_override_font_sizes/font_size = 30
 text = "BOSS"
 horizontal_alignment = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=28246362]
 shape = SubResource("CircleShape2D_enemy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1748451141]
+sprite_frames = SubResource("SpriteFrames_s685e")
+animation = &"idle"

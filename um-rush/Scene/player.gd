@@ -10,6 +10,10 @@ const LANE_SPEED = 8.0
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var col = $CollisionShape2D
+@onready var sfx_jump = $SFX_Jump
+@onready var sfx_roll = $SFX_Roll
+@onready var sfx_hit = $SFX_Hit
+@onready var sfx_powerup = $SFX_Powerup
 
 var lanes = [-600.0, -400.0, -200.0]
 var current_lane = 1
@@ -90,6 +94,7 @@ func _physics_process(delta: float) -> void:
 		anim.play("Rolling")
 		set_collision_mask_value(3, false)
 		anim.animation_finished.connect(_on_roll_finished, CONNECT_ONE_SHOT)
+		sfx_roll.play()
 
 	# Normal movement
 	if not is_dashing and not is_rolling:
@@ -99,6 +104,7 @@ func _physics_process(delta: float) -> void:
 			jump_velocity_y = JUMP_VELOCITY
 			set_collision_mask_value(1, false)
 			set_collision_mask_value(3, false)
+			sfx_jump.play()
 
 		# Lane up
 		if Input.is_action_just_pressed("ui_up") and not is_jumping:
@@ -130,6 +136,7 @@ func _physics_process(delta: float) -> void:
 	if get_slide_collision_count() > 0 and hit_cooldown <= 0 and not is_rolling and not is_jumping:
 		hit_obstacle.emit()
 		hit_cooldown = 1.0
+		sfx_hit.play()
 
 	# Animation
 	if is_jumping:
@@ -150,6 +157,7 @@ func _on_roll_finished():
 func apply_speed_boost(multiplier: float = 1.5, duration: float = 5.0) -> void:
 	power_speed_mult = multiplier
 	speed_boost_timer = duration
+	sfx_powerup.play()
 
 func apply_shield(duration: float = 8.0) -> void:
 	shield_timer = duration

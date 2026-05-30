@@ -11,6 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://drd78voywjhl0" path="res://assets/4.png" id="8_ha7wd"]
 [ext_resource type="Texture2D" uid="uid://cdu44ure8iohx" path="res://assets/5.png" id="9_yjs1f"]
 [ext_resource type="Texture2D" uid="uid://cubcxi2xww1v4" path="res://assets/6.png" id="10_vyw1f"]
+[ext_resource type="AudioStream" uid="uid://15qrdh4ywb36" path="res://assets/audio/bgm/bgm_L1.ogg" id="12_0ka5k"]
+[ext_resource type="AudioStream" uid="uid://d0dald72l6i1l" path="res://assets/audio/sfx/sfx_cat.mp3" id="13_ha7wd"]
+[ext_resource type="AudioStream" uid="uid://bxxxekgjc0uxc" path="res://assets/audio/sfx/ribhavagrawal-game-over.mp3" id="14_vyw1f"]
+[ext_resource type="AudioStream" uid="uid://dbuyh14r3spqn" path="res://assets/audio/sfx/sfx_win.mp3" id="15_cvvdq"]
+[ext_resource type="AudioStream" uid="uid://qdrk50ywd77o" path="res://assets/audio/sfx/sfx_powerup.mp3" id="16_cvvdq"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
@@ -57,6 +62,7 @@ corner_radius_bottom_left = 12
 [node name="Game" type="Node2D" unique_id=1280767070]
 position = Vector2(228.2, 742)
 script = ExtResource("1_4jv7b")
+bgm = ExtResource("12_0ka5k")
 
 [node name="Player" parent="." unique_id=416136360 instance=ExtResource("1_mhtsl")]
 z_index = 2
@@ -272,5 +278,24 @@ text = "Pause"
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[node name="SFX_Cat" type="AudioStreamPlayer" parent="." unique_id=120056655]
+stream = ExtResource("13_ha7wd")
+volume_db = 16.0
+bus = &"SFX"
+
+[node name="SFX_GameOver" type="AudioStreamPlayer" parent="." unique_id=1271491400]
+stream = ExtResource("14_vyw1f")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="SFX_Win" type="AudioStreamPlayer" parent="." unique_id=1108571483]
+stream = ExtResource("15_cvvdq")
+volume_db = 16.0
+bus = &"SFX"
+
+[node name="SFX_PowerUp" type="AudioStreamPlayer" parent="." unique_id=755365763]
+stream = ExtResource("16_cvvdq")
+bus = &"SFX"
 
 [connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

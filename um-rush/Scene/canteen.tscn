@@ -9,6 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://bxor1i4r14hsy" path="res://assets/Background Canteen/2.png" id="5_84swh"]
 [ext_resource type="Texture2D" uid="uid://cdu44ure8iohx" path="res://assets/5.png" id="8_wnpx4"]
 [ext_resource type="Texture2D" uid="uid://cubcxi2xww1v4" path="res://assets/6.png" id="9_vrd2y"]
+[ext_resource type="AudioStream" uid="uid://b6bafbkia00pt" path="res://assets/audio/bgm/bgm_L2.ogg" id="10_84swh"]
+[ext_resource type="AudioStream" uid="uid://d0dald72l6i1l" path="res://assets/audio/sfx/sfx_cat.mp3" id="11_05clk"]
+[ext_resource type="AudioStream" uid="uid://bxxxekgjc0uxc" path="res://assets/audio/sfx/ribhavagrawal-game-over.mp3" id="12_ocd53"]
+[ext_resource type="AudioStream" uid="uid://dbuyh14r3spqn" path="res://assets/audio/sfx/sfx_win.mp3" id="13_qr0na"]
+[ext_resource type="AudioStream" uid="uid://d3rhymsg5ofi8" path="res://assets/audio/sfx/sfx_collectFood.wav" id="14_qr0na"]
+[ext_resource type="AudioStream" uid="uid://qdrk50ywd77o" path="res://assets/audio/sfx/sfx_powerup.mp3" id="14_yl8lo"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
@@ -55,6 +61,7 @@ corner_radius_bottom_left = 12
 [node name="Canteen" type="Node2D" unique_id=1280767070]
 position = Vector2(232.2, 745)
 script = ExtResource("1_0v1td")
+bgm = ExtResource("10_84swh")
 
 [node name="Player" parent="." unique_id=416136360 instance=ExtResource("2_84swh")]
 z_index = 2
@@ -282,5 +289,27 @@ script = ExtResource("2_hngr")
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[node name="SFX_Cat" type="AudioStreamPlayer" parent="." unique_id=1249322565]
+stream = ExtResource("11_05clk")
+bus = &"SFX"
+
+[node name="SFX_GameOver" type="AudioStreamPlayer" parent="." unique_id=691177714]
+stream = ExtResource("12_ocd53")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="SFX_Win" type="AudioStreamPlayer" parent="." unique_id=1027753634]
+stream = ExtResource("13_qr0na")
+volume_db = 16.0
+bus = &"SFX"
+
+[node name="SFX_PowerUp" type="AudioStreamPlayer" parent="." unique_id=1424405301]
+stream = ExtResource("14_yl8lo")
+bus = &"SFX"
+
+[node name="SFX_Food" type="AudioStreamPlayer" parent="." unique_id=1609468264]
+stream = ExtResource("14_qr0na")
+bus = &"SFX"
 
 [connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

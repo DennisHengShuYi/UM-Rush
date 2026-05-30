@@ -6,7 +6,7 @@
 size = Vector2(136, 86)
 
 [node name="obstacle2" type="StaticBody2D" unique_id=1115281461]
-collision_layer = 4
+collision_layer = 256
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1773272999]

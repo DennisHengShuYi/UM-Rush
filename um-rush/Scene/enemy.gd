@@ -10,6 +10,7 @@ var start_y := 0.0
 var alive_time := 0.0
 
 func _ready() -> void:
+	add_to_group("enemies")
 	start_y = position.y
 	body_entered.connect(_on_body_entered)
 
@@ -48,12 +49,6 @@ func _is_in_same_lane(body: Node) -> bool:
 	if parent_lanes == null or player_lane == null:
 		return true
 
-	var closest_lane := 0
-	var closest_distance := INF
-	for i in range(parent_lanes.size()):
-		var distance = abs(position.y - parent_lanes[i])
-		if distance < closest_distance:
-			closest_distance = distance
-			closest_lane = i
+	var player_lane_y = parent_lanes[player_lane]
+	return abs(position.y - player_lane_y) < 120.0
 
-	return player_lane == closest_lane

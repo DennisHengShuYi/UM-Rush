@@ -6,8 +6,8 @@
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4jekx"]
 load_path = "res://.godot/imported/boss_man.png-10d58ec7e9d074ae0bea50299e72d357.ctex"
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
-radius = 62.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
+size = Vector2(80, 350)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s685e"]
 animations = [{
@@ -40,12 +40,12 @@ script = ExtResource("1_enemy")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2086852623]
 texture_filter = 1
-scale = Vector2(0.24, 0.24)
+scale = Vector2(0.4, 0.4)
 texture = SubResource("CompressedTexture2D_4jekx")
 
 [node name="BossLabel" type="Label" parent="." unique_id=1525647380]
 offset_left = -76.0
-offset_top = -188.0
+offset_top = -350.0
 offset_right = 76.0
 offset_bottom = -154.0
 theme_override_colors/font_color = Color(1, 0.05, 0.05, 1)
@@ -56,8 +56,9 @@ text = "BOSS"
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=28246362]
-shape = SubResource("CircleShape2D_enemy")
+shape = SubResource("RectangleShape2D_enemy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1748451141]
+scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_s685e")
 animation = &"idle"

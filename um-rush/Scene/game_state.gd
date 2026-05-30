@@ -23,6 +23,7 @@ func start_level(level_id: int) -> void:
 	hits = 0
 	powerups_used = {}
 	last_level_summary = {}
+	cats_collected.erase(str(level_id))
 	score_changed.emit(current_level_score, total_score)
 
 func add_score(amount: int) -> void:
@@ -71,13 +72,11 @@ func finish_level(stats: Dictionary) -> Dictionary:
 	return last_level_summary
 
 func calculate_grade() -> String:
-	if hits >= 5:
-		return "C"
-	if current_level_score >= 900:
+	if current_level_score >= 900 and hits < 5:
 		return "A+"
-	if current_level_score >= 700:
+	if current_level_score >= 700 and hits < 5:
 		return "A"
-	if current_level_score >= 450:
+	if current_level_score >= 450 and hits < 5:
 		return "B"
 	if current_level_score >= 200:
 		return "C"
@@ -94,3 +93,14 @@ func format_level_result(prefix: String = "") -> String:
 		int(summary.get("cats", cats_collected.size())),
 		int(summary.get("hits", hits))
 	]
+
+func reset_game() -> void:
+	total_score = 0
+	current_level_id = 0
+	current_level_score = 0
+	hits = 0
+	powerups_used = {}
+	cats_collected = {}
+	last_grade = "F"
+	last_level_summary = {}
+

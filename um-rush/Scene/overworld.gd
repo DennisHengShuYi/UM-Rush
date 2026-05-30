@@ -9,6 +9,7 @@ func _ready():
 	$CanvasLayer/Level3Button.pressed.connect(func(): _go_to_scene("res://Scene/level3.tscn"))
 	$CanvasLayer/Level4Button.pressed.connect(func(): _go_to_scene("res://Scene/level4.tscn"))
 	$CanvasLayer/Level5Button.pressed.connect(func(): _go_to_scene("res://Scene/level5.tscn"))
+	$CanvasLayer/MenuButton.pressed.connect(func(): _go_to_scene("res://Scene/main_menu.tscn"))
 
 func _go_to_scene(scene_path: String) -> void:
 	call_deferred("_change_scene", scene_path)

@@ -5,6 +5,8 @@ extends Control
 
 @onready var panel_display = $panel_image
 @onready var dialogue_text = $dialogue_box/dialogue_text
+@onready var sfx_alarm = $SFX_Alarm
+@onready var sfx_run = $SFX_Run
 
 var current_panel: int = 0
 
@@ -30,6 +32,14 @@ func show_panel(index: int):
 	
 	if index < cutscene_text.size():
 		dialogue_text.text = cutscene_text[index]
+	
+	# Control alarm sound
+	if index < 5:
+		if not sfx_alarm.playing:
+			sfx_alarm.play()
+	else:
+		sfx_alarm.stop()
+		sfx_run.play()
 
 func advance_cutscene():
 	current_panel += 1

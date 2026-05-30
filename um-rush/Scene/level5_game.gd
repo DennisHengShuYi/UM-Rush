@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var bgm: AudioStream
+
 @onready var stress_bar = $CanvasLayer/ProgressBar
 @onready var timer_label = $CanvasLayer/Label
 @onready var stress_label = $CanvasLayer/StressLabel
@@ -13,6 +15,12 @@ extends Node2D
 @onready var camera = $Camera2D
 @onready var qna_mechanic = $QnaMechanic
 @onready var pause_menu = $PauseLayer/PauseMenu
+@onready var sfx_cat = $SFX_Cat
+@onready var sfx_gameover = $SFX_GameOver
+@onready var sfx_win = $SFX_Win
+@onready var sfx_powerup = $SFX_PowerUp
+@onready var sfx_correctans = $SFX_CorrectAns
+@onready var sfx_wrongans = $SFX_WrongAns
 @onready var score_state = get_node("/root/GameState")
 
 enum RunState { MENU, PLAYING, GAME_OVER, WIN }
@@ -49,6 +57,7 @@ var question_spacing = 5000.0
 var question_active = false
 
 func _ready():
+	AudioManager.play_bgm(bgm)
 	stress_bar.max_value = max_stress
 	stress_bar.value = 0
 	win_popup.visible = false
@@ -185,6 +194,7 @@ func on_correct_answer():
 	score_state.record_correct_answer()
 	question_active = false
 	player.set_physics_process(true)
+	sfx_correctans.play()
 
 func on_wrong_answer():
 	score_state.record_hit()
@@ -198,6 +208,7 @@ func on_wrong_answer():
 	stress = clamp(stress + 20.0, 0, max_stress)
 	stress_bar.value = stress
 	stress_label.text = "Stress: " + str(int(stress)) + "%"
+	sfx_wrongans.play()
 
 var last_was_double = false
 
@@ -261,11 +272,13 @@ func collect_powerup(power_type: String):
 		player.apply_shield()
 	stress_bar.value = stress
 	stress_label.text = "Stress: " + str(int(stress)) + "%"
+	sfx_powerup.play()
 
 func collect_cat(level_id: int):
 	if score_state.record_cat(level_id):
 		stress = max(stress - 10.0, 0.0)
 		score_state.record_correct_answer()
+		sfx_cat.play()
 
 func handle_enemy_hit(_enemy):
 	score_state.record_hit()
@@ -287,6 +300,7 @@ func win():
 	player.set_physics_process(false)
 	qna_mechanic.set_process(false)
 	win_popup.visible = true
+	sfx_win.play()
 	if stress < 30:
 		message_label.text = "🎓 Perfect score!\nYou aced the exam! Grade: A+"
 	elif stress < 50:
@@ -300,6 +314,7 @@ func win():
 func game_over(reason: String = ""):
 	if state == RunState.GAME_OVER:
 		return
+	sfx_gameover.play()
 	state = RunState.GAME_OVER
 	game_running = false
 	player.set_physics_process(false)

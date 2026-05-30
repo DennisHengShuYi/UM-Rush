@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cd14ytfji22xn" path="res://Scene/overworld.gd" id="1_6jwp1"]
 [ext_resource type="Texture2D" uid="uid://g0b5y8rq8gwv" path="res://assets/map.png" id="2_v726c"]
+[ext_resource type="AudioStream" uid="uid://pl5fty7ycidj" path="res://assets/audio/bgm/bgm_cutscene.mp3" id="3_k0jx0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v726c"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -20,6 +21,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Overworld" type="Node2D" unique_id=1485237498]
 script = ExtResource("1_6jwp1")
+bgm = ExtResource("3_k0jx0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2082222003]
 

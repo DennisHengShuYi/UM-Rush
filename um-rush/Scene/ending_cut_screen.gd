@@ -2,6 +2,7 @@ extends Control
 
 # Drag and drop your 6 panel images here
 @export var panel_images: Array[Texture2D]
+@export var bgm: AudioStream
 
 @onready var panel_display = $panel_image
 @onready var dialogue_text = $dialogue_box/dialogue_text
@@ -14,6 +15,7 @@ var cutscene_text: Array[String] = [
 ]
 
 func _ready():
+	AudioManager.play_bgm(bgm)
 	show_panel(current_panel)
 
 func _process(delta):
@@ -29,7 +31,6 @@ func show_panel(index: int):
 
 func advance_cutscene():
 	current_panel += 1
-
 	if current_panel < cutscene_text.size():
 		show_panel(current_panel)
 	else:

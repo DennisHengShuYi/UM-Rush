@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var bgm: AudioStream
+
 @onready var stress_bar = $CanvasLayer/ProgressBar
 @onready var timer_label = $CanvasLayer/Label
 @onready var stress_label = $CanvasLayer/StressLabel
@@ -13,6 +15,11 @@ extends Node2D
 @onready var camera = $Camera2D
 @onready var noise_meter = $NoiseMeter
 @onready var pause_menu = $PauseLayer/PauseMenu
+@onready var sfx_cat = $SFX_Cat  
+@onready var sfx_gameover = $SFX_GameOver
+@onready var sfx_win = $SFX_Win
+@onready var sfx_food = $SFX_Food
+@onready var sfx_powerup = $SFX_PowerUp
 @onready var score_state = get_node("/root/GameState")
 
 enum RunState { MENU, PLAYING, GAME_OVER, WIN }
@@ -26,7 +33,7 @@ var power_up_scene = preload("res://Scene/power_up.tscn")
 var campus_cat_scene = preload("res://Scene/campus_cat.tscn")
 
 var last_spawn_x = 0.0
-var spawn_distance = 800.0
+var spawn_distance = 900.0
 var last_enemy_x = 0.0
 var enemy_spawn_distance = 2100.0
 var last_powerup_x = 0.0
@@ -45,6 +52,7 @@ var score_label: Label
 var shield_label: Label
 
 func _ready():
+	AudioManager.play_bgm(bgm)
 	stress_bar.max_value = max_stress
 	stress_bar.value = 0
 	win_popup.visible = false
@@ -229,11 +237,13 @@ func collect_powerup(power_type: String):
 		player.apply_shield()
 	stress_bar.value = stress
 	stress_label.text = "Stress: " + str(int(stress)) + "%"
+	sfx_powerup.play()
 
 func collect_cat(level_id: int):
 	if score_state.record_cat(level_id):
 		stress = max(stress - 10.0, 0.0)
 		noise_meter.noise = max(noise_meter.noise - 20.0, 0.0)
+		sfx_cat.play()
 
 func handle_enemy_hit(_enemy):
 	score_state.record_hit()
@@ -257,6 +267,7 @@ func win():
 	noise_meter.set_process(false)
 	noise_meter.loud_label.visible = false
 	win_popup.visible = true
+	sfx_win.play()
 	if stress < 30:
 		message_label.text = "🌟 Silent as a ghost!\nScore: A+"
 	elif stress < 50:
@@ -270,6 +281,7 @@ func win():
 func game_over(reason: String = ""):
 	if state == RunState.GAME_OVER:
 		return
+	sfx_gameover.play()
 	state = RunState.GAME_OVER
 	game_running = false
 	player.set_physics_process(false)

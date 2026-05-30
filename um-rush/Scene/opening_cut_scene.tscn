@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cclu7vqxr402p" path="res://assets/Panel/panel4.png" id="5_mw3q3"]
 [ext_resource type="Texture2D" uid="uid://onakhihanlkn" path="res://assets/Panel/panel5.png" id="6_5hqts"]
 [ext_resource type="Texture2D" uid="uid://ds4s4mt6r1ag" path="res://assets/Panel/panel6.jpg" id="7_8tugs"]
+[ext_resource type="AudioStream" uid="uid://m0anyadcibey" path="res://assets/audio/sfx/sfx_alarm.mp3" id="8_mw3q3"]
+[ext_resource type="AudioStream" uid="uid://h86xooolx8n5" path="res://assets/audio/sfx/sfx_run.mp3" id="9_5hqts"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ek48b"]
 bg_color = Color(1, 1, 1, 1)
@@ -85,3 +87,12 @@ grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 18
 text = "Press SPACE to continue ➜"
+
+[node name="SFX_Alarm" type="AudioStreamPlayer" parent="." unique_id=288347682]
+stream = ExtResource("8_mw3q3")
+autoplay = true
+bus = &"SFX"
+
+[node name="SFX_Run" type="AudioStreamPlayer" parent="." unique_id=747320135]
+stream = ExtResource("9_5hqts")
+bus = &"SFX"

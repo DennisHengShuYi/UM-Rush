@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var bgm: AudioStream
+
 @onready var stress_bar = $CanvasLayer/ProgressBar
 @onready var timer_label = $CanvasLayer/Label
 @onready var stress_label = $CanvasLayer/StressLabel
@@ -13,6 +15,11 @@ extends Node2D
 @onready var camera = $Camera2D
 @onready var hunger_meter = $HungerMeter
 @onready var pause_menu = $PauseLayer/PauseMenu
+@onready var sfx_cat = $SFX_Cat
+@onready var sfx_gameover = $SFX_GameOver
+@onready var sfx_win = $SFX_Win
+@onready var sfx_food = $SFX_Food
+@onready var sfx_powerup = $SFX_PowerUp
 @onready var score_state = get_node("/root/GameState")
 
 enum RunState { MENU, PLAYING, GAME_OVER, WIN }
@@ -27,7 +34,7 @@ var power_up_scene = preload("res://Scene/power_up.tscn")
 var campus_cat_scene = preload("res://Scene/campus_cat.tscn")
 
 var last_spawn_x = 0.0
-var spawn_distance = 800.0
+var spawn_distance = 950.0
 var last_food_x = 0.0
 var food_spawn_distance = 1200.0
 var last_enemy_x = 0.0
@@ -52,6 +59,7 @@ var score_label: Label
 var shield_label: Label
 
 func _ready():
+	AudioManager.play_bgm(bgm)
 	stress_bar.max_value = max_stress
 	stress_bar.value = 0
 	win_popup.visible = false
@@ -249,6 +257,7 @@ func spawn_cat():
 	cat.position = Vector2(player.position.x + 1100.0, lanes[randi() % 3])
 
 func collect_food():
+	sfx_food.play()
 	score_state.add_score(40)
 	hunger_meter.eat_food()
 
@@ -262,9 +271,11 @@ func collect_powerup(power_type: String):
 		player.apply_shield()
 	stress_bar.value = stress
 	stress_label.text = "Stress: " + str(int(stress)) + "%"
+	sfx_powerup.play()
 
 func collect_cat(level_id: int):
 	if score_state.record_cat(level_id):
+		sfx_cat.play()
 		stress = max(stress - 10.0, 0.0)
 		hunger_meter.eat_food()
 
@@ -291,6 +302,7 @@ func win():
 	hunger_meter.set_process(false)
 	hunger_meter.hungry_label.visible = false
 	win_popup.visible = true
+	sfx_win.play()
 	if stress < 30:
 		message_label.text = "🌟 Perfect! No stress at all!\nScore: A+"
 	elif stress < 50:
@@ -310,6 +322,7 @@ func game_over(reason: String = ""):
 	hunger_meter.set_process(false)
 	hunger_meter.hungry_label.visible = false
 	gameover_popup.visible = true
+	sfx_gameover.play()
 	if stress >= max_stress:
 		gameover_message.text = "😵 Burned out from stress!\nTake it easy next time."
 	elif time_left <= 0:

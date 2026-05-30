@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6nmpcyk5d1yf" path="res://Scene/how_to_play.gd" id="1_fhiku"]
 [ext_resource type="Texture2D" uid="uid://bcqam3advgw5a" path="res://assets/main_menu_bg.jpg" id="1_soife"]
 [ext_resource type="FontFile" uid="uid://4hgw8cduu67v" path="res://GrapeSoda.ttf" id="1_y2r7m"]
+[ext_resource type="AudioStream" uid="uid://b6v378mmlinf8" path="res://assets/audio/bgm/bgm_menu.ogg" id="4_da2n4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fhiku"]
 texture = ExtResource("1_soife")
@@ -46,6 +47,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fhiku")
+bgm = ExtResource("4_da2n4")
 
 [node name="background" type="Panel" parent="." unique_id=517845786]
 layout_mode = 1

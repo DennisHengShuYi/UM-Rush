@@ -9,6 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://lue25omfq2kn" path="res://assets/Background_345/4/houses1.png" id="6_53qht"]
 [ext_resource type="Script" uid="uid://bxtore8irub46" path="res://Scene/wifi_visibility.gd" id="7_2m3v2"]
 [ext_resource type="Texture2D" uid="uid://bdtf3t31xiky6" path="res://assets/Background_345/4/houded2.png" id="7_vl2gy"]
+[ext_resource type="AudioStream" uid="uid://jks4h8xmn8w3" path="res://assets/audio/bgm/bgm_L4.ogg" id="10_53qht"]
+[ext_resource type="AudioStream" uid="uid://d0dald72l6i1l" path="res://assets/audio/sfx/sfx_cat.mp3" id="11_0fn5i"]
+[ext_resource type="AudioStream" uid="uid://bxxxekgjc0uxc" path="res://assets/audio/sfx/ribhavagrawal-game-over.mp3" id="12_wtkjk"]
+[ext_resource type="AudioStream" uid="uid://dbuyh14r3spqn" path="res://assets/audio/sfx/sfx_win.mp3" id="13_1p5fu"]
+[ext_resource type="AudioStream" uid="uid://qdrk50ywd77o" path="res://assets/audio/sfx/sfx_powerup.mp3" id="14_g88xa"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twwsd"]
 normal = Vector2(0.0026525108, -0.99999654)
@@ -55,6 +60,7 @@ corner_radius_bottom_left = 12
 [node name="L4" type="Node2D" unique_id=1280767070]
 position = Vector2(232.2, 745)
 script = ExtResource("1_2m3v2")
+bgm = ExtResource("10_53qht")
 
 [node name="Player" parent="." unique_id=416136360 instance=ExtResource("2_jtl1p")]
 z_index = 2
@@ -280,5 +286,23 @@ script = ExtResource("7_2m3v2")
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
+
+[node name="SFX_Cat" type="AudioStreamPlayer" parent="." unique_id=1987719331]
+stream = ExtResource("11_0fn5i")
+bus = &"SFX"
+
+[node name="SFX_GameOver" type="AudioStreamPlayer" parent="." unique_id=572286366]
+stream = ExtResource("12_wtkjk")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="SFX_Win" type="AudioStreamPlayer" parent="." unique_id=1624157400]
+stream = ExtResource("13_1p5fu")
+volume_db = 16.0
+bus = &"SFX"
+
+[node name="SFX_PowerUp" type="AudioStreamPlayer" parent="." unique_id=1628376099]
+stream = ExtResource("14_g88xa")
+bus = &"SFX"
 
 [connection signal="pressed" from="PauseLayer/PauseButton" to="." method="_on_pause_button_pressed"]

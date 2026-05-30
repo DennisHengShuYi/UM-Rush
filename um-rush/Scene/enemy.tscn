@@ -1,35 +1,58 @@
 [gd_scene format=3 uid="uid://ci4wecc6woq7y"]
 
 [ext_resource type="Script" uid="uid://c640dq0ys8wyf" path="res://Scene/enemy.gd" id="1_enemy"]
-[ext_resource type="Texture2D" uid="uid://biognyyx0khv2" path="res://assets/boss_man.png" id="2_enemy"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4jekx"]
-load_path = "res://.godot/imported/boss_man.png-10d58ec7e9d074ae0bea50299e72d357.ctex"
+[ext_resource type="Texture2D" uid="uid://yl8fnnlcl7g6" path="res://assets/Sprite/boss/boss_l1.png" id="2_4jekx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
 radius = 62.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_s685e"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jekx"]
+atlas = ExtResource("2_4jekx")
+region = Rect2(0, 0, 160, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s685e"]
+atlas = ExtResource("2_4jekx")
+region = Rect2(198, 0, 160, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6qjc"]
+atlas = ExtResource("2_4jekx")
+region = Rect2(396, 0, 160, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmi60"]
+atlas = ExtResource("2_4jekx")
+region = Rect2(594, 0, 160, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hti8k"]
+atlas = ExtResource("2_4jekx")
+region = Rect2(792, 0, 160, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44hyy"]
+atlas = ExtResource("2_4jekx")
+region = Rect2(990, 0, 160, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_flpbe"]
 animations = [{
-"frames": [],
-"loop": true,
-"name": &"alert",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_enemy")
+"texture": SubResource("AtlasTexture_4jekx")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_enemy")
+"texture": SubResource("AtlasTexture_s685e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6qjc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmi60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hti8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44hyy")
 }],
 "loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"walk",
+"name": &"move",
 "speed": 5.0
 }]
 
@@ -37,11 +60,6 @@ animations = [{
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_enemy")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2086852623]
-texture_filter = 1
-scale = Vector2(0.24, 0.24)
-texture = SubResource("CompressedTexture2D_4jekx")
 
 [node name="BossLabel" type="Label" parent="." unique_id=1525647380]
 offset_left = -76.0
@@ -59,5 +77,6 @@ horizontal_alignment = 1
 shape = SubResource("CircleShape2D_enemy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1748451141]
-sprite_frames = SubResource("SpriteFrames_s685e")
-animation = &"idle"
+scale = Vector2(3.5, 3.5)
+sprite_frames = SubResource("SpriteFrames_flpbe")
+animation = &"move"

@@ -28,14 +28,11 @@ func _process(delta: float) -> void:
 	if camera and position.x < camera.get_screen_center_position().x - 1200.0:
 		queue_free()
 
-func _on_body_entered(body: Node) -> void:     	
+func _on_body_entered(body: Node) -> void:
 	if body.name != "Player":
-		print("not player, ignoring")
 		return
-	
 	if not _is_in_same_lane(body):
 		return
-		
 	if body.has_method("consume_shield") and body.consume_shield():
 		queue_free()
 		return

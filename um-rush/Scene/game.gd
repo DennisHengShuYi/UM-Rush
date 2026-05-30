@@ -108,6 +108,7 @@ func _on_score_changed(level_score: int, total_score: int):
 
 func start_game():
 	score_state.start_level(1)
+	AudioManager.play_bgm(preload("res://assets/audio/bgm/bgm_L1.ogg"))
 	state = RunState.PLAYING
 	game_running = true
 	time_left = 60.0
@@ -267,6 +268,7 @@ func win():
 	alarm_snooze.set_process(false)
 	alarm_snooze.zzz_label.visible = false
 	win_popup.visible = true
+	AudioManager.stop_bgm()
 	sfx_win.play()
 	if stress < 30:
 		message_label.text = "🌟 Perfect! No stress at all!\nScore: A+"
@@ -287,6 +289,7 @@ func game_over(reason: String = ""):
 	alarm_snooze.set_process(false)
 	alarm_snooze.zzz_label.visible = false
 	gameover_popup.visible = true
+	AudioManager.stop_bgm()
 	sfx_gameover.play()
 	if stress >= max_stress:
 		gameover_message.text = "😵 Burned out from stress!\nTake it easy next time."

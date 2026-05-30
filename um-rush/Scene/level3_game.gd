@@ -28,7 +28,7 @@ var state = RunState.MENU
 var desk_scene = preload("res://Scene/obstacle.tscn")
 var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")
 var goal_scene = preload("res://Scene/goal2.tscn")
-var enemy_scene = preload("res://Scene/enemy.tscn")
+var enemy_scene = preload("res://Scene/enemy_l3.tscn")
 var power_up_scene = preload("res://Scene/power_up.tscn")
 var campus_cat_scene = preload("res://Scene/campus_cat.tscn")
 

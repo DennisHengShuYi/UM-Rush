@@ -5,6 +5,14 @@ extends Area2D
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
+func _process(_delta: float) -> void:
+	var camera = get_viewport().get_camera_2d()
+	if camera == null:
+		return
+	var camera_x = camera.get_screen_center_position().x
+	if position.x < camera_x - 1000.0:
+		queue_free()
+
 func _on_body_entered(body: Node) -> void:
 	if body.name != "Player":
 		return

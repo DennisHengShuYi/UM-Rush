@@ -4,7 +4,10 @@ extends Node2D
 
 func _ready():
 	AudioManager.play_bgm(bgm)
-	$CanvasLayer/Level1Button.pressed.connect(func(): _go_to_scene("res://Scene/game.tscn"))
+	$CanvasLayer/Level1Button.pressed.connect(func():
+		GameState.reset_game()
+		_go_to_scene("res://Scene/game.tscn")
+	)
 	$CanvasLayer/Level2Button.pressed.connect(func(): _go_to_scene("res://Scene/canteen.tscn"))
 	$CanvasLayer/Level3Button.pressed.connect(func(): _go_to_scene("res://Scene/level3.tscn"))
 	$CanvasLayer/Level4Button.pressed.connect(func(): _go_to_scene("res://Scene/level4.tscn"))

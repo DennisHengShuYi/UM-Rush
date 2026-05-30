@@ -49,6 +49,8 @@ var goal_spawned = false
 var lanes = [-200.0, 0.0, 200.0]
 var score_label: Label
 var shield_label: Label
+var combo_label: Label
+var last_distance_streak_x := 0.0
 
 func _ready():
 	AudioManager.play_bgm(bgm)
@@ -58,6 +60,7 @@ func _ready():
 	gameover_popup.visible = false
 	_build_score_ui()
 	_build_shield_ui()
+	_build_combo_ui()
 	score_state.score_changed.connect(_on_score_changed)
 	next_button.pressed.connect(_on_next_level_pressed)
 	retry_button.pressed.connect(_on_retry_pressed)
@@ -103,17 +106,34 @@ func _build_shield_ui():
 	shield_label.add_theme_constant_override("outline_size", 3)
 	$CanvasLayer.add_child(shield_label)
 
+func _build_combo_ui():
+	combo_label = Label.new()
+	combo_label.text = "Streak: 0 (x1.0)"
+	combo_label.position = Vector2(820, 34)
+	combo_label.size = Vector2(300, 32)
+	combo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	combo_label.add_theme_font_size_override("font_size", 25)
+	combo_label.add_theme_color_override("font_color", Color(0.06, 0.23, 0.59))
+	combo_label.add_theme_color_override("font_outline_color", Color(1.0, 1.0, 1.0))
+	combo_label.add_theme_constant_override("outline_size", 4)
+	$CanvasLayer.add_child(combo_label)
+
 func _update_shield_ui():
-	if not shield_label:
+	if not shield_label or not combo_label:
 		return
 	var shield_time = player.get_shield_time_left()
 	shield_label.visible = shield_time > 0.0
 	if shield_label.visible:
 		shield_label.text = "Shield: %ds" % int(ceil(shield_time))
+		combo_label.position = Vector2(820, 66)
+	else:
+		combo_label.position = Vector2(820, 34)
 
 func _on_score_changed(level_score: int, total_score: int):
 	if score_label:
 		score_label.text = "Score: %d | Total: %d" % [level_score, total_score]
+	if combo_label:
+		combo_label.text = "Streak: %d (x%.1f)" % [score_state.streak, score_state.combo_multiplier]
 
 var notice_label: Label
 
@@ -147,6 +167,7 @@ func start_game():
 	last_enemy_x = player.position.x
 	last_powerup_x = player.position.x
 	cat_spawned = false
+	last_distance_streak_x = player.position.x
 
 func _process(delta: float) -> void:
 	if not game_running:
@@ -156,6 +177,10 @@ func _process(delta: float) -> void:
 	time_left -= delta
 	timer_label.text = "Time: " + str(int(time_left))
 	_update_shield_ui()
+	
+	if player.position.x - last_distance_streak_x >= 500.0:
+		last_distance_streak_x = player.position.x
+		score_state.increase_streak(1)
 	if time_left <= 0:
 		time_left = 0
 		game_over("⏰ You ran out of time!")
@@ -294,6 +319,7 @@ func collect_cat(level_id: int):
 func handle_enemy_hit(_enemy):
 	if state != RunState.PLAYING:
 		return
+	last_distance_streak_x = player.position.x
 	score_state.record_hit()
 	stress = clamp(stress + 25.0, 0, max_stress)
 	noise_meter.add_noise(25.0)
@@ -347,6 +373,7 @@ func _on_retry_pressed():
 func _on_player_hit_obstacle():
 	if state != RunState.PLAYING:
 		return
+	last_distance_streak_x = player.position.x
 	if player.consume_shield():
 		return
 	score_state.record_hit()

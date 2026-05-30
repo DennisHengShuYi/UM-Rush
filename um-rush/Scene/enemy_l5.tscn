@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://ddfkl52p640wu"]
+
+[ext_resource type="Script" uid="uid://c640dq0ys8wyf" path="res://Scene/enemy.gd" id="1_8ktb0"]
+[ext_resource type="Texture2D" uid="uid://d05m7i1rdtke4" path="res://assets/Sprite/boss/boss_l5.png" id="2_8ktb0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
+radius = 62.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ktb0"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(0, 0, 192, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nl6f1"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(192, 0, 192, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plrn1"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(384, 0, 192, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2e6pf"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(576, 0, 192, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kieiv"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(768, 0, 192, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qixk1"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(960, 0, 192, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp64c"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(1152, 0, 192, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nypjr"]
+atlas = ExtResource("2_8ktb0")
+region = Rect2(1344, 0, 192, 167)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_flpbe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ktb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nl6f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plrn1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2e6pf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kieiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qixk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp64c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nypjr")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Area2D" unique_id=1268158602]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_8ktb0")
+
+[node name="BossLabel" type="Label" parent="." unique_id=1525647380]
+offset_left = -76.0
+offset_top = -188.0
+offset_right = 76.0
+offset_bottom = -154.0
+theme_override_colors/font_color = Color(1, 0.05, 0.05, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 30
+text = "BOSS"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=28246362]
+shape = SubResource("CircleShape2D_enemy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1748451141]
+scale = Vector2(3.5, 3.5)
+sprite_frames = SubResource("SpriteFrames_flpbe")
+animation = &"move"

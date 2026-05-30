@@ -20,6 +20,7 @@ var cutscene_text: Array[String] = [
 ]
 
 func _ready():
+	AudioManager.stop_bgm()
 	show_panel(current_panel)
 
 func _process(delta):

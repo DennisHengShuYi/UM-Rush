@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://di83fat4207jf"]
+
+[ext_resource type="Script" uid="uid://c640dq0ys8wyf" path="res://Scene/enemy.gd" id="1_ubexg"]
+[ext_resource type="Texture2D" uid="uid://cja7naodiapx3" path="res://assets/Sprite/boss/boss_l3 (1).png" id="2_ubexg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
+radius = 62.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hely7"]
+atlas = ExtResource("2_ubexg")
+region = Rect2(0, 0, 275, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lnpy"]
+atlas = ExtResource("2_ubexg")
+region = Rect2(275, 0, 275, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfggs"]
+atlas = ExtResource("2_ubexg")
+region = Rect2(550, 0, 275, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4nd5"]
+atlas = ExtResource("2_ubexg")
+region = Rect2(825, 0, 275, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ytqk"]
+atlas = ExtResource("2_ubexg")
+region = Rect2(1100, 0, 275, 768)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_flpbe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hely7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lnpy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfggs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4nd5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ytqk")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Area2D" unique_id=1268158602]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_ubexg")
+
+[node name="BossLabel" type="Label" parent="." unique_id=1525647380]
+offset_left = -76.0
+offset_top = -188.0
+offset_right = 76.0
+offset_bottom = -154.0
+theme_override_colors/font_color = Color(1, 0.05, 0.05, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 30
+text = "BOSS"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=28246362]
+shape = SubResource("CircleShape2D_enemy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1748451141]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_flpbe")
+animation = &"move"

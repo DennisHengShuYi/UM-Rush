@@ -325,7 +325,7 @@ func spawn_enemy(pattern: String = "straight"):
 	var lane_y = lanes[lane_index]
 	var spawn_x = get_safe_spawn_x(player.position.x + 1200.0, lane_y, 500.0)
 	add_child(enemy)
-	enemy.position = Vector2(spawn_x, lane_y - 150.0)
+	enemy.position = Vector2(spawn_x, lane_y - 175.0)
 	enemy.assigned_lane = lane_index
 
 func spawn_powerup():

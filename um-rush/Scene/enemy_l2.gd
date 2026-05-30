@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 		if parent and parent.get("lanes") != null:
 			var parent_lanes = parent.get("lanes")
 			if parent_lanes.size() >= 3:
-				var middle_y = parent_lanes[1] - 150.0
+				var middle_y = parent_lanes[1] - 175.0
 				var lane_diff = parent_lanes[1] - parent_lanes[0]
 				var phase = 0.0
 				if assigned_lane == 0:
@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 	if parent and parent.get("lanes") != null:
 		var parent_lanes = parent.get("lanes")
 		if parent_lanes.size() >= 3:
-			position.y = clamp(position.y, parent_lanes[0] - 150.0, parent_lanes[2] - 150.0)
+			position.y = clamp(position.y, parent_lanes[0] - 175.0, parent_lanes[2] - 175.0)
 
 	var camera := get_viewport().get_camera_2d()
 	if camera and position.x < camera.get_screen_center_position().x - 1600.0:
@@ -80,7 +80,7 @@ func get_current_lane_index() -> int:
 	if parent_lanes == null:
 		return -1
 		
-	var physical_y = position.y + 150.0
+	var physical_y = position.y + 175.0
 	
 	var closest_lane = 0
 	var min_diff = abs(physical_y - parent_lanes[0])
@@ -108,6 +108,6 @@ func _is_in_same_lane(body: Node) -> bool:
 		return true
 
 	var player_lane_y = parent_lanes[player_lane]
-	return abs(position.y + 150.0 - player_lane_y) < 120.0
+	return abs(position.y + 175.0 - player_lane_y) < 120.0
 
 

@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 	if camera == null:
 		return
 	var camera_x = camera.get_screen_center_position().x
-	if position.x < camera_x - 1000.0:
+	if position.x < camera_x - 1600.0:
 		queue_free()
 
 func _apply_visual() -> void:

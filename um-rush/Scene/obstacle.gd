@@ -8,5 +8,5 @@ func _process(delta: float) -> void:
 
 	var camera_x = camera.get_screen_center_position().x
 
-	if position.x < camera_x - 1000:
+	if position.x < camera_x - 1600:
 		queue_free()

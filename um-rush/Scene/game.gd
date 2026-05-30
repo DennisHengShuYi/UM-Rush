@@ -207,7 +207,7 @@ func _process(delta: float) -> void:
 				spawn_obstacles()
 			if player.position.x - last_enemy_x >= enemy_spawn_distance:
 				last_enemy_x = player.position.x
-				spawn_enemy("wave")
+				spawn_enemy("straight")
 			if player.position.x - last_powerup_x >= powerup_spawn_distance:
 				last_powerup_x = player.position.x
 				spawn_powerup()
@@ -289,7 +289,7 @@ func spawn_goal():
 	add_child(goal)
 	goal.position = Vector2(player.position.x + 2000, lanes[0])  # bottom lane
 
-func spawn_enemy(pattern: String = "wave"):
+func spawn_enemy(pattern: String = "straight"):
 	var enemy = enemy_scene.instantiate()
 	enemy.pattern = pattern
 	enemy.speed = 240.0

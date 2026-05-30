@@ -253,7 +253,7 @@ func on_wrong_answer():
 	spawn_obstacle_at(player.position.x + 600.0, lanes[0])
 	spawn_obstacle_at(player.position.x + 600.0, lanes[2])
 	spawn_obstacle_at(player.position.x + 1000.0, lanes[1])
-	spawn_enemy("lane_shift")
+	spawn_enemy("wave")
 	stress = clamp(stress + 20.0, 0, max_stress)
 	stress_bar.value = stress
 	stress_label.text = "Stress: " + str(int(stress)) + "%"

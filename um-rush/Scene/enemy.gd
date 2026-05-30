@@ -31,13 +31,13 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if not _is_in_same_lane(body):
 		return
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	if body.has_method("consume_shield") and body.consume_shield():
-		queue_free()
 		return
 	var parent := get_parent()
 	if parent and parent.has_method("handle_enemy_hit"):
 		parent.handle_enemy_hit(self)
-	queue_free()
 
 func _is_in_same_lane(body: Node) -> bool:
 	var parent := get_parent()

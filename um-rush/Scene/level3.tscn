@@ -254,9 +254,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_c6b8m")
 text = "Retry →"
 
 [node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1270122081]
-offset_left = 534.0
+offset_left = 370.0
 offset_top = 4.0
-offset_right = 742.0
+offset_right = 810.0
 offset_bottom = 38.0
 theme_override_colors/font_color = Color(0.0627451, 0.23137255, 0.5882353, 1)
 theme_override_font_sizes/font_size = 24

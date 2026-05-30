@@ -26,6 +26,12 @@ func _process(delta: float) -> void:
 	elif pattern == "lane_shift":
 		position.y = start_y + sin(alive_time * 1.8) * lane_height
 
+	var parent := get_parent()
+	if parent and parent.get("lanes") != null:
+		var parent_lanes = parent.get("lanes")
+		if parent_lanes.size() >= 3:
+			position.y = clamp(position.y, parent_lanes[0] - 150.0, parent_lanes[2] - 150.0)
+
 	var camera := get_viewport().get_camera_2d()
 	if camera and position.x < camera.get_screen_center_position().x - 1600.0:
 		queue_free()

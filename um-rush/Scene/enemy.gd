@@ -38,6 +38,9 @@ func _on_body_entered(body: Node) -> void:
 	if not _is_in_same_lane(body):
 		return
 		
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
+		
 	if body.has_method("consume_shield") and body.consume_shield():
 		return
 	var parent := get_parent()
@@ -57,5 +60,5 @@ func _is_in_same_lane(body: Node) -> bool:
 		return true
 
 	var player_lane_y = parent_lanes[player_lane]
-	return abs(position.y - player_lane_y) < 120.0
+	return abs(position.y - player_lane_y) < 180.0
 

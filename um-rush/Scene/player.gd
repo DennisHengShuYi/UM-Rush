@@ -119,7 +119,7 @@ func _physics_process(delta: float) -> void:
 			target_y = lanes[current_lane]
 
 		# Horizontal
-		var direction := Input.get_axis("", "ui_right")
+		var direction := Input.get_axis("ui_left", "ui_right")
 		if direction != 0:
 			velocity.x = direction * SPEED * speed_mult * power_speed_mult
 			anim.flip_h = direction < 0

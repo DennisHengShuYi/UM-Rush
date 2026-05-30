@@ -53,6 +53,7 @@ text = "BOSS"
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=28246362]
+position = Vector2(0, 78)
 shape = SubResource("CircleShape2D_enemy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1748451141]

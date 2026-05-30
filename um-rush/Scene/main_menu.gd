@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 
 func _on_start_game_button_pressed() -> void:
 	GameState.reset_game()
-	get_tree().change_scene_to_file("res://Scene/opening_cut_scene.tscn")
+	get_tree().change_scene_to_file("res://Scene/overworld.tscn")
 
 
 func _on_how_to_play_button_pressed() -> void:

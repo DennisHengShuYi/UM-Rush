@@ -19,6 +19,7 @@ var powerups_used := {}
 var cats_collected := {}
 var last_grade := "F"
 var last_level_summary := {}
+var unlocked_levels := 1
 
 func start_level(level_id: int) -> void:
 	if level_id != current_level_id:
@@ -107,6 +108,10 @@ func finish_level(stats: Dictionary) -> Dictionary:
 		"powerups": powerups_used.duplicate()
 	}
 	score_changed.emit(current_level_score, total_score)
+	
+	if current_level_id >= unlocked_levels:
+		unlocked_levels = current_level_id + 1
+		
 	return last_level_summary
 
 func calculate_grade() -> String:

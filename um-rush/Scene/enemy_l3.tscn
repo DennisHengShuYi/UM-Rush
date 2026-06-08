@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://di83fat4207jf"]
 
-[ext_resource type="Script" uid="uid://c640dq0ys8wyf" path="res://Scene/enemy.gd" id="1_ubexg"]
+[ext_resource type="Script" uid="uid://ym54kctogvid" path="res://Scene/enemy_l3.gd" id="1_ubexg"]
 [ext_resource type="Texture2D" uid="uid://cja7naodiapx3" path="res://assets/Sprite/boss/boss_l3 (1).png" id="2_ubexg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]

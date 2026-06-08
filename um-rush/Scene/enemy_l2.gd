@@ -109,5 +109,3 @@ func _is_in_same_lane(body: Node) -> bool:
 
 	var player_lane_y = parent_lanes[player_lane]
 	return abs(position.y + 175.0 - player_lane_y) < 120.0
-
-

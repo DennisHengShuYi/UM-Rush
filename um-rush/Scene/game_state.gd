@@ -149,4 +149,3 @@ func reset_game() -> void:
 	cats_collected = {}
 	last_grade = "F"
 	last_level_summary = {}
-

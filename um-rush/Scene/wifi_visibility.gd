@@ -5,7 +5,7 @@ var wifi_label: Label
 var wifi_bar: ProgressBar
 var wifi_bar_style: StyleBoxFlat
 var wifi_strength := 100.0
-const DRAIN_RATE = 3.0
+const DRAIN_RATE = 15.0
 const RECOVER_RATE = 8.0
 var in_weak_zone := false
 var disruption_timer := 0.0
@@ -74,9 +74,9 @@ func _process(delta: float) -> void:
 
 	var is_weak = in_weak_zone or (disruption_timer > 0.0)
 	if is_weak:
-		wifi_strength = max(wifi_strength - DRAIN_RATE * delta * 10, 0.0)
+		wifi_strength = max(wifi_strength - DRAIN_RATE * delta, 0.0)
 	else:
-		wifi_strength = min(wifi_strength + RECOVER_RATE * delta * 10, 100.0)
+		wifi_strength = min(wifi_strength + RECOVER_RATE * delta, 100.0)
 
 	wifi_bar.value = wifi_strength
 

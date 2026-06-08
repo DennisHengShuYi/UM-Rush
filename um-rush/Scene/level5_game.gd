@@ -28,13 +28,13 @@ var state = RunState.MENU
 
 var desk_scene = preload("res://Scene/obstacle.tscn")
 var obstacle2_scene = preload("res://Scene/obstacle_2.tscn")
-var goal_scene = preload("res://Scene/goal2.tscn")
+var goal_scene = preload("res://Scene/goal5.tscn")
 var enemy_scene = preload("res://Scene/enemy_l5.tscn")
 var power_up_scene = preload("res://Scene/power_up.tscn")
 var campus_cat_scene = preload("res://Scene/campus_cat.tscn")
 
 var last_spawn_x = 0.0
-var spawn_distance = 1200.0
+var spawn_distance = 2000.0
 var last_enemy_x = 0.0
 var enemy_spawn_distance = 3000.0
 var last_powerup_x = 0.0
